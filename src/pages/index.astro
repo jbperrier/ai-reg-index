@@ -10,6 +10,7 @@ import {
   datedEntries,
 } from "../lib/entries";
 import { shortDate, standingBucket } from "../lib/format";
+import { u } from "../lib/url";
 import {
   datasetJsonLd,
   organizationJsonLd,
@@ -97,7 +98,7 @@ const recent = amendments.slice(0, 3);
             </div>
           ))
         }
-        <a href="/amendments/" class="link-arrow" style="margin-top:12px"
+        <a href={u("/amendments/")} class="link-arrow" style="margin-top:12px"
           >All changes &rarr;</a
         >
       </div>
@@ -192,7 +193,7 @@ const recent = amendments.slice(0, 3);
                       </td>
                       <td>
                         <a
-                          href={`/sources/${e.slug}/`}
+                          href={u(`/sources/${e.slug}/`)}
                           class={dead ? "gone" : "reg-name"}
                           style={dead ? "font-size:15.5px" : ""}
                         >
@@ -272,7 +273,7 @@ const recent = amendments.slice(0, 3);
               {shortDate(e.effectiveDate)}
             </div>
             <div style="font-size:14.5px;color:oklch(0.85 0.015 265)">
-              <a href={`/sources/${e.slug}/`}>{e.name}</a> &mdash;{" "}
+              <a href={u(`/sources/${e.slug}/`)}>{e.name}</a> &mdash;{" "}
               {e.jurisdiction}.
             </div>
           </div>
@@ -280,7 +281,7 @@ const recent = amendments.slice(0, 3);
       }
     </div>
     <div style="margin-top:20px">
-      <a href="/deadlines/" class="link-arrow">Full deadline list &rarr;</a>
+      <a href={u("/deadlines/")} class="link-arrow">Full deadline list &rarr;</a>
     </div>
   </div>
 
@@ -331,8 +332,8 @@ const recent = amendments.slice(0, 3);
       </div>
     </div>
     <div style="margin-top:24px;display:flex;gap:28px;flex-wrap:wrap">
-      <a href="/method/" class="link-arrow">Read the full method &rarr;</a>
-      <a href="/submit/" class="link-arrow">Request a source &rarr;</a>
+      <a href={u("/method/")} class="link-arrow">Read the full method &rarr;</a>
+      <a href={u("/submit/")} class="link-arrow">Request a source &rarr;</a>
     </div>
   </div>
 
@@ -356,7 +357,7 @@ const recent = amendments.slice(0, 3);
         </div>
         <div class="cite-box">
           AI Reg. Index, EU AI Act: Article 50, &sect; 8<br />
-          <a href="/sources/eu-ai-act-article-50-transparency-and-synthetic-media-disclosures/"
+          <a href={u("/sources/eu-ai-act-article-50-transparency-and-synthetic-media-disclosures/")}
             >airegindex.org/sources/eu-ai-act-article-50&hellip;</a
           ><br />
           last verified 2026-07-30<br />
@@ -372,8 +373,8 @@ const recent = amendments.slice(0, 3);
           schema.org block.
         </p>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <a href="/register.json" class="btn">register.json</a>
-          <a href="/data/" class="btn-ghost">API &amp; fields</a>
+          <a href={u("/register.json")} class="btn">register.json</a>
+          <a href={u("/data/")} class="btn-ghost">API &amp; fields</a>
         </div>
       </div>
     </div>
@@ -396,7 +397,7 @@ const recent = amendments.slice(0, 3);
     </div>
     <form
       style="display:flex;gap:10px;flex-wrap:wrap"
-      action="/submit/"
+      action={u("/submit/")}
       method="get"
     >
       <input

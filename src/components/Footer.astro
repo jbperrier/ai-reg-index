@@ -1,17 +1,18 @@
 ---
 import site from "../data/site.json";
+import { u } from "../lib/url";
 
 const registerLinks = [
-  { label: "All instruments", href: "/" },
-  { label: "Deadlines", href: "/deadlines/" },
-  { label: "Comparisons", href: "/comparisons/" },
-  { label: "Amendments", href: "/amendments/" },
+  { label: "All instruments", href: u("/") },
+  { label: "Deadlines", href: u("/deadlines/") },
+  { label: "Comparisons", href: u("/comparisons/") },
+  { label: "Amendments", href: u("/amendments/") },
 ];
 const useLinks = [
-  { label: "Method", href: "/method/" },
-  { label: "How to cite", href: "/cite/" },
-  { label: "Data & API", href: "/data/" },
-  { label: "Submit a correction", href: "/submit/" },
+  { label: "Method", href: u("/method/") },
+  { label: "How to cite", href: u("/cite/") },
+  { label: "Data & API", href: u("/data/") },
+  { label: "Submit a correction", href: u("/submit/") },
 ];
 ---
 

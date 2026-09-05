@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import { u } from "../lib/url";
 ---
 
 <Base
@@ -13,8 +14,8 @@ import Base from "../layouts/Base.astro";
     <h1 class="h1" style="margin-top:12px">That page is not in the register.</h1>
     <p class="body-text">
       The link may be old, or the entry may have been renamed. Start from the
-      <a href="/">register</a>, or check the
-      <a href="/amendments/">amendments log</a> for recent changes.
+      <a href={u("/")}>register</a>, or check the
+      <a href={u("/amendments/")}>amendments log</a> for recent changes.
     </p>
   </div>
 </Base>

@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import { u } from "../lib/url";
 import PageHeader from "../components/PageHeader.astro";
 import StandingDot from "../components/StandingDot.astro";
 import { entries, datedEntries } from "../lib/entries";
@@ -62,7 +63,7 @@ const daysOut = nextDate
                 style="padding:10px 0;border-top:1px solid oklch(0.24 0.016 265)"
               >
                 <a
-                  href={`/sources/${e.slug}/`}
+                  href={u(`/sources/${e.slug}/`)}
                   style="font-size:14.5px;font-weight:500;color:oklch(0.92 0.008 265)"
                 >
                   {e.name}
@@ -109,7 +110,7 @@ const daysOut = nextDate
                 <div>
                   <StandingDot standing={e.standing} label={false} />
                   <a
-                    href={`/sources/${e.slug}/`}
+                    href={u(`/sources/${e.slug}/`)}
                     style="font-size:14.5px;font-weight:500;color:oklch(0.92 0.008 265)"
                   >
                     {e.name}

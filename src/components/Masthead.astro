@@ -1,5 +1,6 @@
 ---
 import site from "../data/site.json";
+import { u } from "../lib/url";
 
 export interface Props {
   nav?: "register" | "deadlines" | "comparisons" | "method" | "data" | null;
@@ -8,11 +9,11 @@ export interface Props {
 const { nav = null, metaLabel } = Astro.props;
 
 const links: { key: string; label: string; href: string }[] = [
-  { key: "register", label: "Register", href: "/" },
-  { key: "deadlines", label: "Deadlines", href: "/deadlines/" },
-  { key: "comparisons", label: "Comparisons", href: "/comparisons/" },
-  { key: "method", label: "Method", href: "/method/" },
-  { key: "data", label: "Data", href: "/data/" },
+  { key: "register", label: "Register", href: u("/") },
+  { key: "deadlines", label: "Deadlines", href: u("/deadlines/") },
+  { key: "comparisons", label: "Comparisons", href: u("/comparisons/") },
+  { key: "method", label: "Method", href: u("/method/") },
+  { key: "data", label: "Data", href: u("/data/") },
 ];
 
 // 4x4 signal-matrix logo cells (row-major), lime diagonal fading out.
@@ -43,7 +44,7 @@ const cellColor: Record<string, string> = {
     style="display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;padding-top:26px;padding-bottom:24px"
   >
     <a
-      href="/"
+      href={u("/")}
       style="display:flex;align-items:center;gap:16px;color:oklch(0.96 0.005 265)"
     >
       <span

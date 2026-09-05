@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import { u } from "../lib/url";
 import PageHeader from "../components/PageHeader.astro";
 import StandingDot from "../components/StandingDot.astro";
 import { entryBySection } from "../lib/entries";
@@ -148,7 +149,7 @@ const crosswalks = [
             {
               admt.map((e) => (
                 <th>
-                  <a href={`/sources/${e.slug}/`}>{e.sourceLabel}</a>
+                  <a href={u(`/sources/${e.slug}/`)}>{e.sourceLabel}</a>
                   <br />
                   <span
                     style="font-weight:400;color:oklch(0.58 0.02 265);font-size:12px"
@@ -200,7 +201,7 @@ const crosswalks = [
             {
               admt.map((e) => (
                 <td>
-                  <a href={`/sources/${e.slug}/`}>Register &sect; {e.section}</a>
+                  <a href={u(`/sources/${e.slug}/`)}>Register &sect; {e.section}</a>
                 </td>
               ))
             }
@@ -227,7 +228,7 @@ const crosswalks = [
       answer traces to one register entry and inherits that entry’s
       last-verified date.
     </p>
-    <a href="/submit/" class="link-arrow" style="margin-top:18px"
+    <a href={u("/submit/")} class="link-arrow" style="margin-top:18px"
       >Request a crosswalk &rarr;</a
     >
   </div>

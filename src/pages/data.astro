@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import { u } from "../lib/url";
 import PageHeader from "../components/PageHeader.astro";
 import { entries } from "../lib/entries";
 
@@ -44,8 +45,8 @@ const fields = [
       <code>dateModified</code> stamp.
     </p>
     <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px">
-      <a href="/register.json" class="btn">register.json</a>
-      <a href="/sitemap-index.xml" class="btn-ghost">sitemap.xml</a>
+      <a href={u("/register.json")} class="btn">register.json</a>
+      <a href={u("/sitemap-index.xml")} class="btn-ghost">sitemap.xml</a>
     </div>
   </div>
 
@@ -79,7 +80,7 @@ const fields = [
       A read-only REST API — filter by jurisdiction, standing, or tag, and
       fetch a single entry with its full dossier — is planned once the
       monitoring pipeline is live. Until then the static
-      <a href="/register.json">register.json</a> holds the same data, and the
+      <a href={u("/register.json")}>register.json</a> holds the same data, and the
       register pages carry per-entry JSON-LD you can parse directly.
     </p>
   </div>

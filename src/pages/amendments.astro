@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import { u } from "../lib/url";
 import PageHeader from "../components/PageHeader.astro";
 import { amendments, entryBySection } from "../lib/entries";
 ---
@@ -46,7 +47,7 @@ import { amendments, entryBySection } from "../lib/entries";
               >
                 {a.body}{" "}
                 {e && (
-                  <a href={`/sources/${e.slug}/`}>Entry &sect; {a.section} &rarr;</a>
+                  <a href={u(`/sources/${e.slug}/`)}>Entry &sect; {a.section} &rarr;</a>
                 )}
               </div>
             </div>

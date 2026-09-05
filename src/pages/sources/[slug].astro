@@ -3,6 +3,7 @@ import Base from "../../layouts/Base.astro";
 import StandingDot from "../../components/StandingDot.astro";
 import { entries, type Entry } from "../../lib/entries";
 import { shortDate, longDate } from "../../lib/format";
+import { u } from "../../lib/url";
 import {
   entryJsonLd,
   breadcrumbJsonLd,
@@ -320,7 +321,7 @@ const kindLabel: Record<string, string> = {
           This entry carries the register summary and the primary source only. A
           full brief &mdash; scorecard, timeline, checklist, pitfalls &mdash; is
           published for instruments as they are worked through.
-          <a href="/method/">How entries are built</a>.
+          <a href={u("/method/")}>How entries are built</a>.
         </p>
       </div>
     )
@@ -346,7 +347,7 @@ const kindLabel: Record<string, string> = {
       </div>
     </div>
     <div style="margin-top:18px">
-      <a href="/" class="link-arrow">&larr; Back to the register</a>
+      <a href={u("/")} class="link-arrow">&larr; Back to the register</a>
     </div>
   </div>
 </Base>

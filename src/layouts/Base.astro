@@ -3,6 +3,7 @@ import site from "../data/site.json";
 import Masthead from "../components/Masthead.astro";
 import Footer from "../components/Footer.astro";
 import JsonLd from "../components/JsonLd.astro";
+import { u, isPreview } from "../lib/url";
 
 export interface Props {
   title: string;
@@ -38,7 +39,13 @@ const fullTitle =
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    {
+      isPreview ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+      )
+    }
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
@@ -49,7 +56,7 @@ const fullTitle =
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
 
-    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="sitemap" href={u("/sitemap-index.xml")} />
     <link
       rel="preconnect"
       href="https://fonts.gstatic.com"
