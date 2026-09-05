@@ -57,5 +57,18 @@ The source of record is the "AI Reg Index" Supabase project
 
 ## Deploy
 
-Not wired yet. Any static host works (Cloudflare Pages, Vercel, Netlify):
-build command `npm run build`, output directory `dist`.
+**Real hosting: not wired yet.** Any static host works (Cloudflare Pages,
+Vercel, Netlify): build command `npm run build`, output directory `dist`.
+
+**Review preview** is live at <https://jbperrier.github.io/ai-reg-index/>
+(noindex, not the real domain), served from the `gh-pages` branch. It is a
+sub-path deploy, so `PAGES_BASE=/ai-reg-index` is set at build time. To
+republish after a content change:
+
+```bash
+PAGES_BASE=/ai-reg-index npm run build
+git -C ../ai-reg-index-ghpages checkout gh-pages
+rsync -a --delete --exclude .git dist/ ../ai-reg-index-ghpages/
+git -C ../ai-reg-index-ghpages commit -am "Publish preview build" && \
+  git -C ../ai-reg-index-ghpages push
+```
