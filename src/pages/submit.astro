@@ -1,0 +1,70 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHeader from "../components/PageHeader.astro";
+---
+
+<Base
+  title="Submit a correction or a source"
+  description="Correct an AI Reg. Index entry or suggest a new instrument. Both routes require a link to a government primary source."
+  path="/submit/"
+  nav={null}
+>
+  <PageHeader
+    kicker="Help keep it accurate"
+    title="Submit a correction or a source"
+    intro="Both routes need a link to a primary source: an official journal, a legislature, an agency register, or a standards body. Submissions without one cannot be actioned."
+  />
+
+  <div class="sec">
+    <h2 class="h2">Correct an entry</h2>
+    <p class="lead">
+      Use this when an entry is wrong or out of date and you can point to the
+      text that proves it.
+    </p>
+    <form
+      class="card"
+      style="max-width:620px;margin-top:22px"
+      action="https://formspree.io/f/PLACEHOLDER"
+      method="post"
+    >
+      <input type="hidden" name="_subject" value="AI Reg. Index — entry correction" />
+      <label class="kicker" style="display:block;margin-bottom:7px">Entry</label>
+      <input class="field" name="entry" placeholder="e.g. § 8 EU AI Act: Article 50" />
+      <label class="kicker" style="display:block;margin:20px 0 7px">What is wrong</label>
+      <textarea class="field" name="issue" placeholder="The claim in the entry, and what it should say."></textarea>
+      <label class="kicker" style="display:block;margin:20px 0 7px">Primary source URL</label>
+      <input class="field" name="source" type="url" placeholder="https://" />
+      <label class="kicker" style="display:block;margin:20px 0 7px">Your email (optional)</label>
+      <input class="field" name="email" type="email" placeholder="So we can confirm the fix. Not published." />
+      <button class="btn" style="margin-top:22px" type="submit">Send correction</button>
+    </form>
+  </div>
+
+  <div class="sec">
+    <h2 class="h2">Suggest a source</h2>
+    <p class="lead">
+      Use this to propose an instrument the register does not cover yet.
+    </p>
+    <form
+      class="card"
+      style="max-width:620px;margin-top:22px"
+      action="https://formspree.io/f/PLACEHOLDER"
+      method="post"
+    >
+      <input type="hidden" name="_subject" value="AI Reg. Index — source suggestion" />
+      <label class="kicker" style="display:block;margin-bottom:7px">Instrument name</label>
+      <input class="field" name="instrument" placeholder="Name of the law, order, or standard" />
+      <label class="kicker" style="display:block;margin:20px 0 7px">Jurisdiction</label>
+      <input class="field" name="jurisdiction" placeholder="Government or body that issued it" />
+      <label class="kicker" style="display:block;margin:20px 0 7px">Primary source URL</label>
+      <input class="field" name="source" type="url" placeholder="https://" />
+      <label class="kicker" style="display:block;margin:20px 0 7px">Why it belongs in the register</label>
+      <textarea class="field" name="why" placeholder="One or two lines."></textarea>
+      <button class="btn" style="margin-top:22px" type="submit">Send suggestion</button>
+    </form>
+    <p style="font-size:12.5px;color:oklch(0.58 0.02 265);margin-top:16px">
+      Form delivery is not wired yet — the endpoint is a placeholder until the
+      contact address is set.
+    </p>
+  </div>
+</Base>

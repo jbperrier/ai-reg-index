@@ -1,0 +1,152 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHeader from "../components/PageHeader.astro";
+
+const steps = [
+  {
+    n: "1",
+    title: "Draft from the source",
+    body: "A summary is written using only the text of the primary document. Dates, citations, and obligations come from that text, not from memory or secondary coverage.",
+  },
+  {
+    n: "2",
+    title: "Check every claim",
+    body: "A second pass reads the draft line by line against the same source and marks any claim the text does not support. Anything unsupported is cut or corrected.",
+  },
+  {
+    n: "3",
+    title: "A person signs off",
+    body: "An editor reviews the checked draft and the source link, then approves it. The approval date becomes the entry’s last-verified date.",
+  },
+];
+
+const standings = [
+  { color: "oklch(0.46 0.06 200)", name: "Draft", desc: "Introduced or proposed. Not yet passed or adopted." },
+  { color: "oklch(0.6 0.1 165)", name: "Advisory", desc: "Guidance or a published standard. Not binding on its own." },
+  { color: "oklch(0.73 0.14 145)", name: "Enacted", desc: "Signed into law but not yet in effect. The effective date is shown." },
+  { color: "oklch(0.85 0.17 130)", name: "In force", desc: "Effective and enforceable now. Obligations may still phase in." },
+  { color: "oklch(0.5 0.02 265)", name: "Struck down", desc: "Repealed, vacated, or blocked by a court. Kept for the record and shown struck through." },
+];
+---
+
+<Base
+  title="Method"
+  description="How the AI Reg. Index is kept: what goes in, how each entry is verified against its primary source, and what the last-verified date means."
+  path="/method/"
+  nav="method"
+  metaLabel="Updated Aug 2026"
+>
+  <PageHeader
+    kicker="How this register is kept"
+    title="Method"
+    intro="The register is a plain-language index of AI-governance instruments. Every entry points to a government or standards-body primary source and shows the date a person last checked it."
+  />
+
+  <div class="sec">
+    <h2 class="h2">What goes in</h2>
+    <p class="body-text">
+      An instrument is listed when it is a binding law or regulation, an
+      official executive or agency action, or a published standard that the
+      field treats as a compliance reference. Each entry links to the primary
+      text: an official journal, a legislature, an agency register, or the
+      standards body itself.
+    </p>
+    <p class="body-text">
+      News coverage, vendor statements, and third-party trackers are not
+      entries. They are used only as leads that point to a primary source worth
+      checking.
+    </p>
+  </div>
+
+  <div class="sec">
+    <h2 class="h2">How an entry is checked</h2>
+    <p class="lead">
+      Each summary is written and then checked against the same source text
+      before it is published.
+    </p>
+    <div style="margin-top:24px;max-width:76ch">
+      {
+        steps.map((s) => (
+          <div
+            class="row-2"
+            data-collapse
+            style="grid-template-columns:32px 1fr;gap:18px;padding:18px 0"
+          >
+            <div style="font-size:13px;font-weight:700;color:oklch(0.6 0.02 265)">
+              {s.n}
+            </div>
+            <div>
+              <div style="font-weight:500;color:oklch(0.94 0.008 265)">
+                {s.title}
+              </div>
+              <div
+                style="font-size:14px;color:oklch(0.72 0.02 265);margin-top:4px"
+              >
+                {s.body}
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2 class="h2">What “last verified” means</h2>
+    <p class="body-text">
+      The date on an entry is the day an editor last confirmed the summary
+      against the primary source. It is not the date the law was signed or took
+      effect. If a source has changed since that date and the change is not yet
+      reflected, the entry is marked for re-check.
+    </p>
+  </div>
+
+  <div class="sec">
+    <h2 class="h2">Standing</h2>
+    <p class="lead">
+      Each entry carries one status. The colour marks how far along the
+      instrument is.
+    </p>
+    <div style="margin-top:22px;max-width:74ch">
+      {
+        standings.map((s) => (
+          <div
+            class="row-2"
+            data-collapse
+            style="grid-template-columns:150px 1fr;gap:20px;padding:14px 0;align-items:baseline"
+          >
+            <div style="font-size:14px;font-weight:500">
+              <span class="dot" style={`background:${s.color}`} />
+              {s.name}
+            </div>
+            <div style="font-size:13.5px;color:oklch(0.72 0.02 265)">
+              {s.desc}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2 class="h2">How changes are caught</h2>
+    <p class="body-text">
+      Every source is re-read on a schedule. When the text at a source URL
+      differs from the last version on file, the entry is flagged and returned
+      to the check above before the register updates. Readers can subscribe to
+      be told when a specific entry changes.
+    </p>
+  </div>
+
+  <div class="sec">
+    <h2 class="h2">Corrections and licensing</h2>
+    <p class="body-text">
+      If an entry is wrong or out of date,
+      <a href="/submit/">submit a correction</a> with the primary source.
+      Register text is licensed
+      <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. The
+      primary documents are the property of the governments and bodies that
+      publish them.
+    </p>
+  </div>
+</Base>

@@ -1,0 +1,80 @@
+---
+import site from "../data/site.json";
+
+export interface Props {
+  nav?: "register" | "deadlines" | "comparisons" | "method" | "data" | null;
+  metaLabel?: string;
+}
+const { nav = null, metaLabel } = Astro.props;
+
+const links: { key: string; label: string; href: string }[] = [
+  { key: "register", label: "Register", href: "/" },
+  { key: "deadlines", label: "Deadlines", href: "/deadlines/" },
+  { key: "comparisons", label: "Comparisons", href: "/comparisons/" },
+  { key: "method", label: "Method", href: "/method/" },
+  { key: "data", label: "Data", href: "/data/" },
+];
+
+// 4x4 signal-matrix logo cells (row-major), lime diagonal fading out.
+const cells = [
+  "d", "d", "d", "a",
+  "d", "d", "a", "b",
+  "d", "a", "b", "c",
+  "a", "b", "c", "d",
+];
+const cellColor: Record<string, string> = {
+  a: "oklch(0.85 0.17 130)",
+  b: "oklch(0.52 0.09 130)",
+  c: "oklch(0.4 0.03 265)",
+  d: "oklch(0.3 0.018 265)",
+};
+---
+
+<div class="void">
+  <div
+    class="pad mono"
+    style="display:flex;justify-content:space-between;align-items:center;padding-top:12px;padding-bottom:12px;font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:oklch(0.55 0.02 265);border-bottom:1px solid oklch(0.22 0.015 265)"
+  >
+    <span>Updated weekly</span>
+    <span>{metaLabel ?? `Last verified ${site.lastVerified}`}</span>
+  </div>
+  <div
+    class="pad"
+    style="display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;padding-top:26px;padding-bottom:24px"
+  >
+    <a
+      href="/"
+      style="display:flex;align-items:center;gap:16px;color:oklch(0.96 0.005 265)"
+    >
+      <span
+        style="width:40px;height:40px;border-radius:9px;border:1px solid oklch(0.32 0.02 265);display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr);gap:2.5px;padding:7px"
+      >
+        {
+          cells.map((c) => (
+            <span
+              style={`border-radius:1.5px;background:${cellColor[c]}`}
+            />
+          ))
+        }
+      </span>
+      <span style="font-size:26px;font-weight:700;letter-spacing:-0.03em"
+        >AI&nbsp;Reg.&nbsp;Index</span
+      >
+    </a>
+    <nav
+      class="site-nav"
+      style="display:flex;align-items:center;gap:26px;font-size:13.5px"
+    >
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            style={`color:${nav === l.key ? "oklch(0.96 0.005 265)" : "oklch(0.7 0.02 265)"};${nav === l.key ? "font-weight:500" : ""}`}
+          >
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</div>

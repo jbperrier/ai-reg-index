@@ -1,0 +1,58 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHeader from "../components/PageHeader.astro";
+import { amendments, entryBySection } from "../lib/entries";
+---
+
+<Base
+  title="Amendments"
+  description="A running log of AI-governance instruments that have been amended, superseded, or repealed, with the register entry re-verified against the new text."
+  path="/amendments/"
+  nav={null}
+  metaLabel="Change log"
+>
+  <PageHeader
+    kicker="Change log"
+    title="Amendments"
+    intro="When an instrument in the register is amended, superseded, or repealed, the change is recorded here and the entry is re-verified against the new text."
+  />
+
+  <div class="sec">
+    {
+      amendments.map((a) => {
+        const e = entryBySection(a.section);
+        return (
+          <div
+            class="row-2"
+            data-collapse
+            style="grid-template-columns:110px 1fr;gap:26px;padding:20px 0"
+          >
+            <div style="font-size:12.5px;color:oklch(0.6 0.02 265)">
+              {a.date}
+            </div>
+            <div>
+              <span
+                style="font-size:15px;font-weight:500;color:oklch(0.94 0.008 265)"
+              >
+                {a.instrument}
+              </span>
+              <span
+                style="font-size:10.5px;letter-spacing:0.05em;text-transform:uppercase;color:oklch(0.6 0.02 265);border:1px solid oklch(0.32 0.02 265);border-radius:4px;padding:2px 7px;margin-left:10px;white-space:nowrap"
+              >
+                {a.kind}
+              </span>
+              <div
+                style="font-size:13.5px;color:oklch(0.75 0.014 265);margin-top:5px;max-width:74ch"
+              >
+                {a.body}{" "}
+                {e && (
+                  <a href={`/sources/${e.slug}/`}>Entry &sect; {a.section} &rarr;</a>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      })
+    }
+  </div>
+</Base>

@@ -1,0 +1,16 @@
+{
+  "name": "AI Reg. Index",
+  "shortName": "AI Reg. Index",
+  "url": "https://airegindex.org",
+  "tagline": "A register of the AI laws that bind an enterprise.",
+  "description": "A public reference that catalogs AI-governance laws, regulations, executive actions, and standards. Every entry links to the government primary source and shows the date it was last verified.",
+  "publisher": {
+    "name": "SolidCore.ai",
+    "url": "https://solidcore.ai"
+  },
+  "license": {
+    "name": "CC BY 4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "lastVerified": "2026-07-30"
+}

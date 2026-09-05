@@ -1,0 +1,37 @@
+[
+  {
+    "date": "2026-08",
+    "section": 8,
+    "instrument": "EU AI Act: Article 50",
+    "kind": "amended",
+    "body": "Amended by Regulation (EU) 2026/1744, the Digital Omnibus on AI. The machine-readable watermarking obligation in Article 50(2) is extended to 2 December 2026 for systems already on the market."
+  },
+  {
+    "date": "2026-07",
+    "section": 15,
+    "instrument": "Colorado ADMT Act",
+    "kind": "repeal & replace",
+    "body": "SB 26-189 repeals the earlier SB 24-205 and replaces it with a consequential-decision disclosure regime. Enforcement is stayed pending xAI v. Weiser."
+  },
+  {
+    "date": "2026-04",
+    "section": 12,
+    "instrument": "Model risk management guidance",
+    "kind": "superseded",
+    "body": "The Fed, OCC, and FDIC jointly superseded SR 11-7 with SR 26-2 (OCC 2026-13). Generative and agentic AI are held out of scope pending a future request for information."
+  },
+  {
+    "date": "2026-03",
+    "section": 23,
+    "instrument": "New York RAISE Act",
+    "kind": "amended",
+    "body": "Chapter amendments align the Act with California SB 53 and create a NYDFS oversight office. Signed December 2025, effective 1 January 2027."
+  },
+  {
+    "date": "2025",
+    "section": 20,
+    "instrument": "Utah Artificial Intelligence Policy Act",
+    "kind": "amended",
+    "body": "SB 149 has been amended in each subsequent session by SB 226, SB 271, SB 332, and HB 452."
+  }
+]
