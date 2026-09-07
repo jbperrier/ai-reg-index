@@ -11,6 +11,11 @@ export default defineConfig({
   base,
   output: "static",
   trailingSlash: "always",
+  // Astro 7 defaults compressHTML to 'jsx', which drops the space between a
+  // word and an inline element that sit on different source lines
+  // ("maintained by" + <a>SolidCore.ai</a> -> "maintained bySolidCore.ai").
+  // 'true' is lossless HTML minification and keeps that space.
+  compressHTML: true,
   integrations: [sitemap()],
   build: {
     format: "directory",
