@@ -8,6 +8,7 @@ const total = entries.length;
 
 const fields = [
   ["section", "Stable index number for the entry (the § in the register)."],
+  ["slug", "URL segment for the entry's page."],
   ["jurisdiction", "Government or body that issued the instrument."],
   ["name", "Common name of the law, order, or standard."],
   ["citation", "Official citation for the primary text."],
@@ -15,34 +16,33 @@ const fields = [
   ["effectiveDate", "Date the instrument takes or took effect, where one exists."],
   ["verifiedAt", "Date an editor last confirmed the entry against its source."],
   ["gloss", "One or two sentences on what the instrument does."],
-  ["tags", "Subject labels for filtering."],
+  ["tags", "Subject labels."],
   ["sourceUrl", "Link to the primary document."],
   ["frameworks", "Cross-framework mappings, e.g. to the NIST AI RMF."],
+  ["jsonLd", "schema.org node for the entry (Legislation or CreativeWork)."],
 ];
 ---
 
 <Base
-  title="Data & API"
-  description="The whole AI Reg. Index as a single JSON file, with a schema.org Dataset block. Free, no key required."
+  title="Data"
+  description="The whole AI Reg. Index as a single JSON file with a schema.org Dataset block. Published to be used and cited. No key, no sign-up."
   path="/data/"
   nav="data"
   metaLabel={`${total} entries · CC BY 4.0`}
 >
   <PageHeader
     kicker="Machine-readable register"
-    title="Data & API"
-    intro="The whole register is published as a single JSON file with a schema.org Dataset block. No key required."
+    title="Data"
+    intro="The register is published to be quoted, cited, and built on. The whole thing is one JSON file. No key, no sign-up, no rate limit."
   />
 
   <div class="sec">
-    <h2 class="h2">The full export</h2>
+    <h2 class="h2">The export</h2>
     <p class="body-text">
-      One file, all {total} entries, refreshed whenever an entry is verified.
-      Each record carries the fields below plus a schema.org JSON-LD block
-      typed <code>Legislation</code> for statutes, regulations, and executive
-      orders, or <code>CreativeWork</code> for standards and advisories. The
-      file itself carries a <code>Dataset</code> node and a
-      <code>dateModified</code> stamp.
+      One file, all {total} entries, rebuilt whenever an entry is verified.
+      Each record carries the fields below. The file itself is a schema.org
+      <code>Dataset</code> node with a <code>dateModified</code> stamp, so it
+      can be cited as a dataset, not just linked to.
     </p>
     <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px">
       <a href={u("/register.json")} class="btn">register.json</a>
@@ -75,24 +75,31 @@ const fields = [
   </div>
 
   <div class="sec">
-    <h2 class="h2">A hosted API</h2>
+    <h2 class="h2">Every page is parseable too</h2>
     <p class="body-text">
-      A read-only REST API — filter by jurisdiction, standing, or tag, and
-      fetch a single entry with its full dossier — is planned once the
-      monitoring pipeline is live. Until then the static
-      <a href={u("/register.json")}>register.json</a> holds the same data, and the
-      register pages carry per-entry JSON-LD you can parse directly.
+      Each register entry page carries the same data inline as schema.org
+      JSON-LD in the <code>&lt;head&gt;</code> — <code>Legislation</code> for
+      statutes, regulations, and executive orders, <code>CreativeWork</code>
+      for standards and advisories. The register itself carries a
+      <code>Dataset</code> and an <code>Organization</code> node; entry pages
+      add a <code>BreadcrumbList</code>. An answer engine or a scraper can read
+      the register without touching the JSON file.
+    </p>
+    <p class="body-text" style="font-size:13.5px;color:oklch(0.7 0.02 265)">
+      With {total} records, filtering by jurisdiction, standing, or tag is a
+      one-line operation on whatever consumes the file.
     </p>
   </div>
 
   <div class="sec">
     <h2 class="h2">Terms</h2>
     <p class="body-text">
-      Register data is licensed
-      <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
-      Attribute it as: <em>AI Reg. Index, airegindex.com, retrieved [date]</em>.
-      The primary documents belong to the governments and standards bodies that
-      publish them.
+      Register text and data are licensed
+      <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> —
+      quote it, reformat it, build on it, with attribution:
+      <em>AI Reg. Index, airegindex.com</em>, plus the date you retrieved it.
+      The primary documents themselves belong to the governments and standards
+      bodies that publish them.
     </p>
   </div>
 </Base>
