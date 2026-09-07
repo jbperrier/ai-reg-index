@@ -57,18 +57,22 @@ The source of record is the "AI Reg Index" Supabase project
 
 ## Deploy
 
-**Real hosting: not wired yet.** Any static host works (Cloudflare Pages,
-Vercel, Netlify): build command `npm run build`, output directory `dist`.
+**Live at <https://airegindex.com>** on GitHub Pages.
 
-**Review preview** is live at <https://jbperrier.github.io/ai-reg-index/>
-(noindex, not the real domain), served from the `gh-pages` branch. It is a
-sub-path deploy, so `PAGES_BASE=/ai-reg-index` is set at build time. To
-republish after a content change:
+Deploys automatically: every push to `main` runs `.github/workflows/deploy.yml`,
+which builds the site and publishes it. No manual step.
 
-```bash
-PAGES_BASE=/ai-reg-index npm run build
-git -C ../ai-reg-index-ghpages checkout gh-pages
-rsync -a --delete --exclude .git dist/ ../ai-reg-index-ghpages/
-git -C ../ai-reg-index-ghpages commit -am "Publish preview build" && \
-  git -C ../ai-reg-index-ghpages push
-```
+- Domain is set by `public/CNAME` (`airegindex.com`). GoDaddy holds the DNS:
+  four apex `A` records to GitHub Pages IPs, `www` `CNAME` to
+  `jbperrier.github.io`.
+- `public/.nojekyll` keeps GitHub Pages from stripping the `_astro/` folder.
+- SSL is issued and enforced by GitHub automatically.
+
+To publish a content change: edit the JSON in `src/data/`, commit, push to
+`main`. The workflow does the rest (~1 minute).
+
+### Moving to another host later
+
+`src/lib/url.ts` + the `PAGES_BASE` env var support a sub-path deploy if
+needed. For a root-domain host (Cloudflare Pages, Netlify, Vercel): build
+command `npm run build`, output directory `dist`, no env vars.
