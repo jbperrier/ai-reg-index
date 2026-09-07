@@ -11,6 +11,7 @@ import {
 } from "../lib/entries";
 import { shortDate, standingBucket } from "../lib/format";
 import { u } from "../lib/url";
+import FormHandler from "../components/FormHandler.astro";
 import {
   datasetJsonLd,
   organizationJsonLd,
@@ -383,7 +384,7 @@ const recent = amendments.slice(0, 3);
   <!-- SUBSCRIBE -->
   <div
     class="sec"
-    style="display:flex;justify-content:space-between;align-items:center;gap:36px;flex-wrap:wrap"
+    style="display:flex;justify-content:space-between;align-items:flex-start;gap:36px;flex-wrap:wrap"
   >
     <div style="max-width:44ch">
       <div style="font-size:17px;font-weight:600;color:oklch(0.94 0.006 265)">
@@ -395,20 +396,32 @@ const recent = amendments.slice(0, 3);
         One message when an entry is amended, added, or removed. Nothing else.
       </p>
     </div>
-    <form
-      style="display:flex;gap:10px;flex-wrap:wrap"
-      action={u("/submit/")}
-      method="get"
-    >
+    <form style="display:flex;gap:10px;flex-wrap:wrap;max-width:100%" data-form="subscribe">
+      <input
+        type="text"
+        name="website"
+        tabindex="-1"
+        autocomplete="off"
+        aria-hidden="true"
+        style="position:absolute;width:1px;height:1px;overflow:hidden;left:-9999px"
+      />
       <input
         type="email"
         name="email"
         class="field"
+        required
         placeholder="you@company.com"
         style="width:260px"
         aria-label="Email address"
       />
       <button type="submit" class="btn">Subscribe</button>
+      <p
+        data-status
+        hidden
+        style="font-size:13px;width:100%;margin:0"
+      ></p>
     </form>
   </div>
+
+  <FormHandler />
 </Base>
