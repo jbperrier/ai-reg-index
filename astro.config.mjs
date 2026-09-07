@@ -7,7 +7,7 @@ const base = process.env.PAGES_BASE || undefined;
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://airegindex.org",
+  site: "https://airegindex.com",
   base,
   output: "static",
   trailingSlash: "always",

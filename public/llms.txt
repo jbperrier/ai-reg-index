@@ -13,21 +13,21 @@ source URL, and cross-framework mappings.
 
 ## Core pages
 
-- [The register](https://airegindex.org/): all 29 instruments, grouped by jurisdiction
-- [Deadlines](https://airegindex.org/deadlines/): every effective date in the register, in order
-- [Comparisons](https://airegindex.org/comparisons/): instruments that cover the same ground, set side by side
-- [Method](https://airegindex.org/method/): how entries are written, verified, and kept current
-- [Amendments](https://airegindex.org/amendments/): log of instruments that have been amended, superseded, or repealed
+- [The register](https://airegindex.com/): all 29 instruments, grouped by jurisdiction
+- [Deadlines](https://airegindex.com/deadlines/): every effective date in the register, in order
+- [Comparisons](https://airegindex.com/comparisons/): instruments that cover the same ground, set side by side
+- [Method](https://airegindex.com/method/): how entries are written, verified, and kept current
+- [Amendments](https://airegindex.com/amendments/): log of instruments that have been amended, superseded, or repealed
 
 ## Data
 
-- [register.json](https://airegindex.org/register.json): the whole register as one JSON file, with a schema.org Dataset block
-- [Data & fields](https://airegindex.org/data/): field definitions and licensing
+- [register.json](https://airegindex.com/register.json): the whole register as one JSON file, with a schema.org Dataset block
+- [Data & fields](https://airegindex.com/data/): field definitions and licensing
 - Every register entry page carries per-entry schema.org JSON-LD (Legislation or CreativeWork)
 
 ## Notable entries
 
-- [EU AI Act: Article 50](https://airegindex.org/sources/eu-ai-act-article-50-transparency-and-synthetic-media-disclosures/): transparency and synthetic-media disclosure obligations, in force 2 Aug 2026
-- [California CPPA ADMT Regulations](https://airegindex.org/sources/california-cppa-automated-decision-making-technology-admt-regulations/): automated decision-making disclosure, in force phased from 1 Jan 2026
-- [Texas Responsible AI Governance Act (TRAIGA)](https://airegindex.org/sources/texas-responsible-ai-governance-act-traiga/): in force 1 Jan 2026
-- [NIST AI Risk Management Framework](https://airegindex.org/sources/nist-ai-risk-management-framework-ai-rmf-1-0/): the voluntary US baseline many statutes map to
+- [EU AI Act: Article 50](https://airegindex.com/sources/eu-ai-act-article-50-transparency-and-synthetic-media-disclosures/): transparency and synthetic-media disclosure obligations, in force 2 Aug 2026
+- [California CPPA ADMT Regulations](https://airegindex.com/sources/california-cppa-automated-decision-making-technology-admt-regulations/): automated decision-making disclosure, in force phased from 1 Jan 2026
+- [Texas Responsible AI Governance Act (TRAIGA)](https://airegindex.com/sources/texas-responsible-ai-governance-act-traiga/): in force 1 Jan 2026
+- [NIST AI Risk Management Framework](https://airegindex.com/sources/nist-ai-risk-management-framework-ai-rmf-1-0/): the voluntary US baseline many statutes map to

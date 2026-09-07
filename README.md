@@ -1,7 +1,7 @@
 # AI Reg. Index
 
 Public register of AI-governance laws, regulations, executive actions, and
-standards. Static site, published at [airegindex.org](https://airegindex.org).
+standards. Static site, published at [airegindex.com](https://airegindex.com).
 Maintained by [SolidCore.ai](https://solidcore.ai). Register text CC BY 4.0.
 
 ## Stack
