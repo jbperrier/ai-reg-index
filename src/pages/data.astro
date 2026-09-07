@@ -1,0 +1,98 @@
+---
+import Base from "../layouts/Base.astro";
+import { u } from "../lib/url";
+import PageHeader from "../components/PageHeader.astro";
+import { entries } from "../lib/entries";
+
+const total = entries.length;
+
+const fields = [
+  ["section", "Stable index number for the entry (the § in the register)."],
+  ["jurisdiction", "Government or body that issued the instrument."],
+  ["name", "Common name of the law, order, or standard."],
+  ["citation", "Official citation for the primary text."],
+  ["standing", "Draft, advisory, enacted, in force, or struck down."],
+  ["effectiveDate", "Date the instrument takes or took effect, where one exists."],
+  ["verifiedAt", "Date an editor last confirmed the entry against its source."],
+  ["gloss", "One or two sentences on what the instrument does."],
+  ["tags", "Subject labels for filtering."],
+  ["sourceUrl", "Link to the primary document."],
+  ["frameworks", "Cross-framework mappings, e.g. to the NIST AI RMF."],
+];
+---
+
+<Base
+  title="Data & API"
+  description="The whole AI Reg. Index as a single JSON file, with a schema.org Dataset block. Free, no key required."
+  path="/data/"
+  nav="data"
+  metaLabel={`${total} entries · CC BY 4.0`}
+>
+  <PageHeader
+    kicker="Machine-readable register"
+    title="Data & API"
+    intro="The whole register is published as a single JSON file with a schema.org Dataset block. No key required."
+  />
+
+  <div class="sec">
+    <h2 class="h2">The full export</h2>
+    <p class="body-text">
+      One file, all {total} entries, refreshed whenever an entry is verified.
+      Each record carries the fields below plus a schema.org JSON-LD block
+      typed <code>Legislation</code> for statutes, regulations, and executive
+      orders, or <code>CreativeWork</code> for standards and advisories. The
+      file itself carries a <code>Dataset</code> node and a
+      <code>dateModified</code> stamp.
+    </p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px">
+      <a href={u("/register.json")} class="btn">register.json</a>
+      <a href={u("/sitemap-index.xml")} class="btn-ghost">sitemap.xml</a>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2 class="h2">Fields</h2>
+    <div style="margin-top:18px;max-width:76ch">
+      {
+        fields.map(([name, desc]) => (
+          <div
+            class="row-2"
+            data-collapse
+            style="grid-template-columns:170px 1fr;gap:24px;padding:12px 0"
+          >
+            <div
+              style="font-family:'SFMono-Regular',Menlo,Consolas,monospace;font-size:12.5px;color:oklch(0.85 0.17 130)"
+            >
+              {name}
+            </div>
+            <div style="font-size:13.5px;color:oklch(0.75 0.014 265)">
+              {desc}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2 class="h2">A hosted API</h2>
+    <p class="body-text">
+      A read-only REST API — filter by jurisdiction, standing, or tag, and
+      fetch a single entry with its full dossier — is planned once the
+      monitoring pipeline is live. Until then the static
+      <a href={u("/register.json")}>register.json</a> holds the same data, and the
+      register pages carry per-entry JSON-LD you can parse directly.
+    </p>
+  </div>
+
+  <div class="sec">
+    <h2 class="h2">Terms</h2>
+    <p class="body-text">
+      Register data is licensed
+      <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+      Attribute it as: <em>AI Reg. Index, airegindex.com, retrieved [date]</em>.
+      The primary documents belong to the governments and standards bodies that
+      publish them.
+    </p>
+  </div>
+</Base>

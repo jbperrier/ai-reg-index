@@ -1,0 +1,24 @@
+---
+export interface Props {
+  kicker: string;
+  title: string;
+  intro?: string;
+}
+const { kicker, title, intro } = Astro.props;
+---
+<div
+  class="pad void"
+  style="padding-top:44px;padding-bottom:40px;border-bottom:1px solid oklch(0.27 0.017 265)"
+>
+  <div class="kicker">{kicker}</div>
+  <h1 class="h1" style="margin-top:10px">{title}</h1>
+  {
+    intro && (
+      <p
+        style="font-size:15.5px;line-height:1.6;color:oklch(0.75 0.014 265);max-width:64ch;margin-top:14px"
+      >
+        {intro}
+      </p>
+    )
+  }
+</div>

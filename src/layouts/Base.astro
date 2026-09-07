@@ -1,0 +1,467 @@
+---
+import site from "../data/site.json";
+import Masthead from "../components/Masthead.astro";
+import Footer from "../components/Footer.astro";
+import JsonLd from "../components/JsonLd.astro";
+import { u, isPreview } from "../lib/url";
+
+export interface Props {
+  title: string;
+  description: string;
+  /** path only, e.g. "/deadlines/". Canonical is built from site.url. */
+  path: string;
+  nav?: "register" | "deadlines" | "comparisons" | "method" | "data" | null;
+  /** schema.org nodes to embed in <head>. */
+  jsonld?: Record<string, unknown>[];
+  /** override the masthead top-bar right-hand label. */
+  metaLabel?: string;
+}
+
+const {
+  title,
+  description,
+  path,
+  nav = null,
+  jsonld = [],
+  metaLabel,
+} = Astro.props;
+
+const canonical = new URL(path, site.url).href;
+const fullTitle =
+  path === "/" ? `${site.name} — ${site.tagline}` : `${title} · ${site.name}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {
+      isPreview ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+      )
+    }
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="sitemap" href={u("/sitemap-index.xml")} />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+    />
+
+    {jsonld.map((node) => <JsonLd node={node} />)}
+
+    <style is:global>
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        color-scheme: dark;
+      }
+      body {
+        margin: 0;
+        background: oklch(0.14 0.012 265);
+        color: oklch(0.95 0.005 265);
+        font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        color: oklch(0.85 0.17 130);
+        text-decoration: none;
+      }
+      a:hover {
+        color: oklch(0.92 0.14 130);
+      }
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        font-weight: 600;
+        color: oklch(0.96 0.005 265);
+      }
+      p {
+        margin: 0;
+      }
+      img {
+        max-width: 100%;
+      }
+      code,
+      pre {
+        font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+      }
+
+      .mono {
+        font-family: "Roboto", sans-serif;
+      }
+      .shell {
+        width: 1200px;
+        max-width: 100%;
+        margin: 0 auto;
+        background: oklch(0.17 0.013 265);
+      }
+      .pad {
+        padding-left: 64px;
+        padding-right: 64px;
+      }
+      .void {
+        background: oklch(0.13 0.012 265);
+      }
+      .sec {
+        padding: 56px 64px;
+        border-top: 1px solid oklch(0.27 0.017 265);
+      }
+      .h1 {
+        font-size: 34px;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        line-height: 1.12;
+      }
+      .h2 {
+        font-size: 24px;
+        font-weight: 600;
+        letter-spacing: -0.015em;
+      }
+      .lead {
+        font-size: 15px;
+        line-height: 1.6;
+        color: oklch(0.72 0.02 265);
+        max-width: 66ch;
+        margin-top: 10px;
+      }
+      .body-text {
+        font-size: 15px;
+        line-height: 1.68;
+        color: oklch(0.82 0.012 265);
+        max-width: 70ch;
+        margin-top: 16px;
+      }
+      .kicker {
+        font-size: 10.5px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: oklch(0.6 0.02 265);
+      }
+      .link-arrow {
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        display: inline-block;
+      }
+      .btn {
+        background: oklch(0.85 0.17 130);
+        color: oklch(0.16 0.013 265);
+        border-radius: 7px;
+        padding: 12px 20px;
+        font-size: 14px;
+        font-weight: 700;
+        display: inline-block;
+        border: 0;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      .btn:hover {
+        background: oklch(0.9 0.15 130);
+        color: oklch(0.16 0.013 265);
+      }
+      .btn-ghost {
+        border: 1px solid oklch(0.3 0.018 265);
+        color: oklch(0.85 0.015 265);
+        border-radius: 7px;
+        padding: 11px 18px;
+        font-size: 13.5px;
+        font-weight: 500;
+        display: inline-block;
+      }
+      .field {
+        border: 1px solid oklch(0.3 0.018 265);
+        background: oklch(0.2 0.015 265);
+        padding: 11px 14px;
+        font-size: 14px;
+        color: oklch(0.9 0.01 265);
+        font-family: inherit;
+        border-radius: 7px;
+        width: 100%;
+      }
+      .field::placeholder {
+        color: oklch(0.5 0.02 265);
+      }
+      textarea.field {
+        min-height: 110px;
+        resize: vertical;
+      }
+      .dot {
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        border-radius: 2px;
+        margin-right: 9px;
+        vertical-align: middle;
+      }
+      .dead {
+        text-decoration: line-through;
+        text-decoration-thickness: 1.5px;
+        text-decoration-color: oklch(0.66 0.13 130);
+        color: oklch(0.6 0.02 265);
+      }
+      .gone {
+        text-decoration: line-through;
+        text-decoration-thickness: 1.5px;
+        text-decoration-color: oklch(0.45 0.02 265);
+        color: oklch(0.55 0.02 265);
+      }
+      .cite-box {
+        background: oklch(0.12 0.011 265);
+        border: 1px solid oklch(0.27 0.017 265);
+        border-radius: 8px;
+        padding: 16px 18px;
+        font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+        font-size: 12.5px;
+        line-height: 1.9;
+        color: oklch(0.85 0.015 265);
+        margin-top: 12px;
+        overflow-x: auto;
+      }
+      .card {
+        border: 1px solid oklch(0.27 0.017 265);
+        border-radius: 10px;
+        padding: 24px;
+        background: oklch(0.16 0.013 265);
+      }
+      .hairline-top {
+        border-top: 1px solid oklch(0.24 0.016 265);
+      }
+
+      /* register table */
+      .table-scroll {
+        overflow-x: auto;
+      }
+      table.reg {
+        width: 100%;
+        min-width: 880px;
+        border-collapse: collapse;
+        margin-top: 16px;
+      }
+      table.reg th {
+        text-align: left;
+      }
+      .reg-head th {
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        color: oklch(0.56 0.02 265);
+        padding: 0 16px 10px 0;
+      }
+      .reg-group td {
+        padding: 22px 0 8px;
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        color: oklch(0.7 0.02 265);
+        border-top: 1px solid oklch(0.32 0.02 265);
+        text-transform: uppercase;
+      }
+      .reg-row {
+        border-top: 1px solid oklch(0.24 0.016 265);
+      }
+      .reg-row:hover {
+        background: oklch(0.2 0.015 265);
+      }
+      .reg-row td {
+        padding: 14px 16px 14px 0;
+        vertical-align: top;
+      }
+      .reg-sec {
+        font-size: 12.5px;
+        color: oklch(0.58 0.02 265);
+      }
+      .reg-name {
+        font-size: 15.5px;
+        color: oklch(0.95 0.005 265);
+      }
+      .reg-cite {
+        font-size: 11px;
+        color: oklch(0.58 0.02 265);
+        margin-top: 3px;
+      }
+      .reg-standing {
+        font-size: 13px;
+        color: oklch(0.85 0.015 265);
+      }
+      .reg-date {
+        font-size: 12px;
+        color: oklch(0.64 0.02 265);
+      }
+      .reg-verified {
+        font-size: 11.5px;
+        color: oklch(0.58 0.02 265);
+        text-align: right;
+      }
+
+      /* comparison table */
+      .cmp-wrap {
+        overflow-x: auto;
+        margin-top: 26px;
+        border: 1px solid oklch(0.27 0.017 265);
+        border-radius: 10px;
+      }
+      table.cmp {
+        border-collapse: collapse;
+        width: 100%;
+        min-width: 840px;
+      }
+      table.cmp th,
+      table.cmp td {
+        text-align: left;
+        vertical-align: top;
+        padding: 14px 16px;
+        border-top: 1px solid oklch(0.24 0.016 265);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      table.cmp thead th {
+        border-top: none;
+        background: oklch(0.19 0.014 265);
+        font-weight: 600;
+        color: oklch(0.92 0.008 265);
+      }
+      table.cmp tbody th {
+        background: oklch(0.155 0.012 265);
+        font-weight: 500;
+        color: oklch(0.66 0.02 265);
+        width: 150px;
+        font-size: 11px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      table.cmp td {
+        color: oklch(0.82 0.012 265);
+      }
+
+      /* generic row layouts */
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      .row-2 {
+        display: grid;
+        gap: 24px;
+        padding: 16px 0;
+        border-top: 1px solid oklch(0.24 0.016 265);
+      }
+      .row-2:first-child {
+        border-top: none;
+      }
+
+      /* scorecard bars */
+      .bar-track {
+        height: 6px;
+        background: oklch(0.27 0.017 265);
+        border-radius: 3px;
+        overflow: hidden;
+        margin-top: 8px;
+      }
+      .bar-fill {
+        height: 100%;
+        background: oklch(0.85 0.17 130);
+        border-radius: 3px;
+      }
+
+      /* velocity chart */
+      .bars {
+        display: flex;
+        align-items: flex-end;
+        gap: 16px;
+        height: 180px;
+        border-bottom: 2px solid oklch(0.3 0.018 265);
+      }
+      .bar-col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+      .bar-n {
+        font-size: 12px;
+        color: oklch(0.7 0.02 265);
+      }
+
+      /* checklist */
+      .check-item {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        padding: 12px 0;
+        border-top: 1px solid oklch(0.24 0.016 265);
+      }
+      .check-item:first-child {
+        border-top: none;
+      }
+      .checkbox {
+        width: 15px;
+        height: 15px;
+        border: 1.5px solid oklch(0.4 0.03 265);
+        border-radius: 3px;
+        flex: none;
+        margin-top: 2px;
+      }
+
+      @media (max-width: 768px) {
+        .shell {
+          width: 100%;
+        }
+        .pad {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+        .sec {
+          padding: 36px 20px;
+        }
+        .h1 {
+          font-size: 26px !important;
+          line-height: 1.16 !important;
+        }
+        .h2 {
+          font-size: 20px;
+        }
+        nav.site-nav {
+          flex-wrap: wrap;
+          gap: 12px 18px;
+          justify-content: flex-start;
+        }
+        [data-collapse] {
+          grid-template-columns: 1fr !important;
+          gap: 20px !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <Masthead nav={nav} metaLabel={metaLabel} />
+      <slot />
+      <Footer />
+    </div>
+  </body>
+</html>

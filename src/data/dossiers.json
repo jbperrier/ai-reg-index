@@ -1,0 +1,54 @@
+{
+  "8": {
+    "whoItBinds": "Providers who place an AI system on the Union market and deployers who use one under their own authority. Establishment in the Union is not required — a provider whose output reaches a user in the EU is in scope. Military, national security, and pure research uses fall outside it.",
+    "executiveBrief": [
+      "Starting August 2, 2026, Article 50 of the EU AI Act (Regulation (EU) 2024/1689) enforces horizontal transparency disclosures on all providers and deployers of conversational, generative, or biometric AI systems whose outputs reach the EU. The regulation mandates: informing users they are interacting with AI; marking synthetic content in a machine-readable format; disclosing deepfakes; and notifying individuals exposed to biometric or emotion recognition systems.",
+      "Under Regulation (EU) 2026/1744 (the Digital Omnibus on AI), generative systems placed on the market before August 2, 2026 are granted a transition period until December 2, 2026, strictly for the machine-readable watermarking requirement of Article 50(2). Interactive chatbot disclosures (Article 50(1)) have no grace period and must be fully operational by August 2, 2026. Violations carry statutory fines up to €15 million or 3% of global annual turnover under Article 99(4)."
+    ],
+    "paradigmShiftTitle": "The collapse of the “obviousness” shield",
+    "paradigmShiftBody": "Historically, interface designers relied on implicit context — assuming that if a user landed on a page labeled “AI Assistant,” no explicit popup or disclosure was needed. Article 50 strips away that assumption: transparency is an active, persistent obligation, not a passive design aesthetic. The Commission Guidelines place the burden of proof entirely on the provider to demonstrate the AI interaction is “obvious from the outset.” If a user shows any confusion, or the interaction mimics human customer service, the obviousness exception is voided.",
+    "scorecard": [
+      { "metric": "Developer experience & CI/CD portability", "score": 1, "max": 5, "rationale": "The raw legal text is dense, legalistic jargon with zero technical implementation specifics — no SDKs, repos, or configuration-as-code." },
+      { "metric": "Operational & financial burden", "score": 3, "max": 5, "rationale": "Bypasses costly third-party conformity assessments for high-risk systems, but still demands real engineering hours for UI notices, watermarking pipelines, and logging." },
+      { "metric": "Auditability & evidence precision", "score": 4, "max": 5, "rationale": "Market surveillance authorities can conduct basic black-box testing; non-compliance is fairly objective to detect." },
+      { "metric": "Technical depth / granularity", "score": 3, "max": 5, "rationale": "The statutory text is abstract, but the 51-page Commission Guidelines give concrete interpretations of what counts as an obvious interaction." },
+      { "metric": "Modern architecture readiness", "score": 4, "max": 5, "rationale": "Explicitly names generative modalities, deepfakes, and chatbots, but relies on static risk models rather than agentic execution loops." },
+      { "metric": "Regulatory bite factor", "score": 4, "max": 5, "rationale": "Fines up to €15,000,000 or 3% of global annual turnover under Article 99(4)." },
+      { "metric": "Enforcement track record", "score": 1, "max": 5, "rationale": "None. No formal enforcement history prior to the August 2, 2026 effective date." },
+      { "metric": "Interpretive & ambiguity risk", "score": 3, "max": 5, "rationale": "The boundaries of the artistic/satirical exception and what counts as editorial control remain open to litigation." },
+      { "metric": "Volatility & stability", "score": 4, "max": 5, "rationale": "Passed trilogues, won Parliamentary approval, and was adjusted by the now-enacted Digital Omnibus — the structural obligations are locked." },
+      { "metric": "Global portability & cross-over", "score": 2, "max": 5, "rationale": "Tied to EU-localized institutions — national market surveillance authorities and the EU AI Office." }
+    ],
+    "timeline": [
+      { "date": "2021-04-21", "event": "The European Commission presents its original draft of the AI Act, with lightweight transparency requirements for chatbots." },
+      { "date": "2023-12-01", "event": "General-purpose AI and generative models become a primary focus of trilogue negotiations, creating the dedicated Chapter IV transparency rules." },
+      { "date": "2024-06-12", "event": "The finalized text of Regulation (EU) 2024/1689 is officially published in the Official Journal." },
+      { "date": "2026-05-01", "event": "The EU Parliament reaches a provisional agreement on the Digital Omnibus on AI to delay Annex III high-risk compliance." },
+      { "date": "2026-07-20", "event": "The European Commission formally approves the final Article 50 Implementation Guidelines (Communication C(2026) 5054)." },
+      { "date": "2026-07-24", "event": "The Digital Omnibus (Regulation (EU) 2026/1744) is formally published, locking in the Article 50(2) watermarking extension to December 2, 2026." },
+      { "date": "2026-08-02", "event": "Article 50 officially takes effect globally." }
+    ],
+    "checklist": [
+      "First-interaction intercepts: configure conversational APIs and websocket handlers to trigger a prominent notice (“You are interacting with an AI assistant”) at or before the first user prompt. A generic terms-of-service link is not sufficient.",
+      "Synthetic media asset signing: integrate a cryptographic watermarking standard (such as C2PA Content Credentials) directly into content-generation pipelines.",
+      "Text output tagging: ensure text-generation outputs contain structured metadata or robust watermarking patterns for machine-readability.",
+      "Deepfake overrides: if hosting face-swap or voice-clone features, inject a persistent, visible watermark on the render that cannot be easily cropped out.",
+      "Logging and verification vault: log user consent/disclosure exposures to maintain an auditable evidence trail for market surveillance authorities."
+    ],
+    "penalties": "Up to €15,000,000 or 3% of global annual turnover, whichever is higher (Article 99(4)); a reduced cap applies to SMEs and startups. National market surveillance authorities may also order the immediate withdrawal of a non-compliant model from the EU market.",
+    "pitfalls": [
+      {
+        "title": "The “no-risk-tier” trap",
+        "problem": "Compliance teams assume they are exempt because they do not operate high-risk (Annex III) systems.",
+        "trap": "Article 50 is horizontal — it applies based on feature capability (using a chatbot, generating an image), regardless of risk tier.",
+        "defensivePlay": "Run a capability inventory of all active applications. Any conversational interface, biometric categorization, or image/text generation gets the standard Article 50 disclosures, independent of the high-risk pipeline."
+      },
+      {
+        "title": "The user-in-EU extraterritorial hook",
+        "problem": "A US-headquartered team assumes no EU presence means no EU AI Act exposure.",
+        "trap": "If an end user located in the EU accesses the system and receives its output, the system is in scope under Article 55, and national authorities can audit foreign providers.",
+        "defensivePlay": "If the disclosure or watermarking mandates cannot be met, geofence EU users. Otherwise, adopt Article 50 as the global design baseline for frictionless market access."
+      }
+    ]
+  }
+}

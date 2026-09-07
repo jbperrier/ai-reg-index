@@ -1,0 +1,130 @@
+---
+import Base from "../layouts/Base.astro";
+import { u } from "../lib/url";
+import PageHeader from "../components/PageHeader.astro";
+import StandingDot from "../components/StandingDot.astro";
+import { entries, datedEntries } from "../lib/entries";
+import { shortDate } from "../lib/format";
+
+const dated = datedEntries();
+const TODAY = "2026-09-05";
+
+// group by calendar year
+const years = [...new Set(dated.map((e) => e.effectiveDate!.slice(0, 4)))].sort();
+
+// nearest future date and everything sharing it
+const future = dated.filter((e) => e.effectiveDate! >= TODAY);
+const nextDate = future[0]?.effectiveDate ?? null;
+const nextItems = future.filter((e) => e.effectiveDate === nextDate);
+const daysOut = nextDate
+  ? Math.round(
+      (Date.parse(nextDate) - Date.parse(TODAY)) / 86400000,
+    )
+  : 0;
+---
+
+<Base
+  title="Deadlines"
+  description="Every effective date in the AI Reg. Index, in order. When each instrument took effect or takes effect."
+  path="/deadlines/"
+  nav="deadlines"
+  metaLabel={`${entries.length} instruments tracked`}
+>
+  <PageHeader
+    kicker="Compliance calendar"
+    title="Deadlines"
+    intro="Every effective date in the register, in order. A date marks when an instrument took effect or takes effect — not when it was signed, and not an enforcement deadline unless the entry says so."
+  />
+
+  {
+    nextDate && (
+      <div class="sec">
+        <div class="kicker">Next deadline</div>
+        <div
+          data-collapse
+          style="display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:flex-start;margin-top:16px"
+        >
+          <div>
+            <div
+              style="font-size:44px;font-weight:700;letter-spacing:-0.02em;color:oklch(0.85 0.17 130)"
+            >
+              {shortDate(nextDate)}
+            </div>
+            <div
+              class="mono"
+              style="font-size:12.5px;color:oklch(0.6 0.02 265);margin-top:4px"
+            >
+              {daysOut} days out
+            </div>
+          </div>
+          <div>
+            {nextItems.map((e) => (
+              <div
+                style="padding:10px 0;border-top:1px solid oklch(0.24 0.016 265)"
+              >
+                <a
+                  href={u(`/sources/${e.slug}/`)}
+                  style="font-size:14.5px;font-weight:500;color:oklch(0.92 0.008 265)"
+                >
+                  {e.name}
+                </a>
+                <div
+                  style="font-size:12px;color:oklch(0.58 0.02 265);margin-top:2px"
+                >
+                  {e.jurisdiction} &middot; {e.standing}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  <div class="sec">
+    <h2 class="h2">Full timeline</h2>
+    <p class="lead">Grouped by year. Each row links to the register entry.</p>
+
+    {
+      years.map((year) => (
+        <>
+          <div
+            style="font-size:12.5px;font-weight:700;letter-spacing:0.06em;color:oklch(0.6 0.02 265);text-transform:uppercase;margin:32px 0 4px;padding-top:20px;border-top:1px solid oklch(0.24 0.016 265)"
+          >
+            {year}
+          </div>
+          {dated
+            .filter((e) => e.effectiveDate!.startsWith(year))
+            .map((e) => (
+              <div
+                class="row-2"
+                data-collapse
+                style="grid-template-columns:96px 1fr;align-items:baseline"
+              >
+                <div
+                  class="mono"
+                  style="font-size:12.5px;color:oklch(0.6 0.02 265)"
+                >
+                  {shortDate(e.effectiveDate).replace(` ${year}`, "")}
+                </div>
+                <div>
+                  <StandingDot standing={e.standing} label={false} />
+                  <a
+                    href={u(`/sources/${e.slug}/`)}
+                    style="font-size:14.5px;font-weight:500;color:oklch(0.92 0.008 265)"
+                  >
+                    {e.name}
+                  </a>
+                  <div
+                    style="font-size:12px;color:oklch(0.58 0.02 265);margin-top:2px"
+                  >
+                    {e.jurisdiction} &middot; {e.standing.toLowerCase()}
+                  </div>
+                </div>
+              </div>
+            ))}
+        </>
+      ))
+    }
+  </div>
+</Base>

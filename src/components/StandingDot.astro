@@ -1,0 +1,13 @@
+---
+import { standingBucket, standingColor } from "../lib/format";
+
+export interface Props {
+  /** the free-text standing value, e.g. "In force, phased" */
+  standing: string;
+  /** show the label text after the dot (default true) */
+  label?: boolean;
+}
+const { standing, label = true } = Astro.props;
+const color = standingColor(standingBucket(standing));
+---
+<span class="dot" style={`background:${color}`}></span>{label ? standing : ""}

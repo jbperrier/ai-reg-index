@@ -1,0 +1,235 @@
+---
+import Base from "../layouts/Base.astro";
+import { u } from "../lib/url";
+import PageHeader from "../components/PageHeader.astro";
+import StandingDot from "../components/StandingDot.astro";
+import { entryBySection } from "../lib/entries";
+import { shortDate } from "../lib/format";
+
+const admt = [5, 15, 18, 19]
+  .map((n) => entryBySection(n))
+  .filter((e): e is NonNullable<typeof e> => Boolean(e));
+
+// hand-written comparison rows keyed by section
+const cell: Record<
+  number,
+  { reaches: string; obligation: string; enforcement: string }
+> = {
+  5: {
+    reaches:
+      "Use of automated decision-making technology for “significant decisions” about consumers, under the CCPA framework.",
+    obligation:
+      "Point-of-collection notice, an opt-out toggle that honors Global Privacy Control, and a right to access the decision logic.",
+    enforcement:
+      "Enforced by the California Privacy Protection Agency; obligations phase in on a schedule set in the rules.",
+  },
+  15: {
+    reaches:
+      "Automated decision-making that produces a consequential decision about a Colorado resident.",
+    obligation:
+      "Disclosure to the affected person that an automated system was used in a consequential decision.",
+    enforcement:
+      "Enforcement paused pending xAI v. Weiser. The Act repeals the earlier SB 24-205.",
+  },
+  18: {
+    reaches:
+      "Predictive data analytics in employment; amends the Human Rights Act and the Consumer Fraud and Deceptive Business Practices Act.",
+    obligation:
+      "Bars discrimination through predictive analytics and reaches deceptive-practice claims; disclosure and anti-bias duties on employers.",
+    enforcement: "Enforced through the Illinois Human Rights Act mechanism.",
+  },
+  19: {
+    reaches:
+      "Automated employment decision tools used to screen NYC job candidates or employees.",
+    obligation:
+      "An independent bias audit within the prior year, published results, and advance notice to candidates.",
+    enforcement:
+      "Enforced by the NYC Department of Consumer and Worker Protection; civil penalties per violation.",
+  },
+};
+
+const crosswalks = [
+  {
+    name: "Automated decision-making disclosure laws (United States)",
+    href: "#admt",
+    members:
+      "California CPPA ADMT · Colorado ADMT Act · Illinois HB 3773 · NYC Local Law 144",
+    status: "below",
+  },
+  {
+    name: "Frontier-model transparency & safety laws",
+    members:
+      "California TFAIA (SB 53) · New York RAISE Act · Korea Framework Act · EU AI Act",
+    status: "progress",
+  },
+  {
+    name: "Voluntary AI risk frameworks",
+    members:
+      "NIST AI RMF 1.0 · NIST AI 600-1 · ISO/IEC 42001 · OWASP LLM Top 10",
+    status: "progress",
+  },
+  {
+    name: "What maps to NIST AI RMF",
+    members: "Statutes and standards that cite or align to the RMF functions",
+    status: "progress",
+  },
+];
+---
+
+<Base
+  title="Comparisons"
+  description="AI-governance instruments that cover the same ground, set side by side, each cell linked to the register entry it summarizes."
+  path="/comparisons/"
+  nav="comparisons"
+  metaLabel={`${crosswalks.length} crosswalks`}
+>
+  <PageHeader
+    kicker="Crosswalks"
+    title="Comparisons"
+    intro="Instruments that cover the same ground, set side by side. Each cell links back to the register entry it summarizes, so the comparison stays checkable against the primary source."
+  />
+
+  <div class="sec">
+    <div class="kicker">All crosswalks</div>
+    <div style="margin-top:14px">
+      {
+        crosswalks.map((c) => (
+          <div
+            data-collapse
+            style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:baseline;padding:18px 0;border-top:1px solid oklch(0.24 0.016 265)"
+          >
+            <div>
+              {c.href ? (
+                <a
+                  href={c.href}
+                  style="font-size:16px;font-weight:500;color:oklch(0.94 0.008 265)"
+                >
+                  {c.name}
+                </a>
+              ) : (
+                <span
+                  style="font-size:16px;font-weight:500;color:oklch(0.6 0.02 265)"
+                >
+                  {c.name}
+                </span>
+              )}
+              <div
+                style="font-size:12.5px;color:oklch(0.58 0.02 265);margin-top:3px"
+              >
+                {c.members}
+              </div>
+            </div>
+            <span
+              class="mono"
+              style={`font-size:11px;letter-spacing:0.06em;text-transform:uppercase;${c.status === "below" ? "color:oklch(0.85 0.17 130)" : "color:oklch(0.5 0.02 265)"}`}
+            >
+              {c.status === "below" ? "Below ↓" : "In progress"}
+            </span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="sec" id="admt">
+    <h2 class="h2">
+      Automated decision-making disclosure laws (United States)
+    </h2>
+    <p class="lead">
+      Four US instruments that regulate automated or algorithmic decisions
+      about people. They differ on which decisions they reach, who must comply,
+      and what the core duty is.
+    </p>
+
+    <div class="cmp-wrap">
+      <table class="cmp">
+        <thead>
+          <tr>
+            <th></th>
+            {
+              admt.map((e) => (
+                <th>
+                  <a href={u(`/sources/${e.slug}/`)}>{e.sourceLabel}</a>
+                  <br />
+                  <span
+                    style="font-weight:400;color:oklch(0.58 0.02 265);font-size:12px"
+                  >
+                    &sect; {e.section}
+                  </span>
+                </th>
+              ))
+            }
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Citation</th>
+            {admt.map((e) => <td>{e.citation}</td>)}
+          </tr>
+          <tr>
+            <th>Jurisdiction</th>
+            {admt.map((e) => <td>{e.jurisdiction}</td>)}
+          </tr>
+          <tr>
+            <th>Standing</th>
+            {
+              admt.map((e) => (
+                <td>
+                  <StandingDot standing={e.standing} />
+                </td>
+              ))
+            }
+          </tr>
+          <tr>
+            <th>Effective date</th>
+            {admt.map((e) => <td>{shortDate(e.effectiveDate)}</td>)}
+          </tr>
+          <tr>
+            <th>What it reaches</th>
+            {admt.map((e) => <td>{cell[e.section]?.reaches}</td>)}
+          </tr>
+          <tr>
+            <th>Core obligation</th>
+            {admt.map((e) => <td>{cell[e.section]?.obligation}</td>)}
+          </tr>
+          <tr>
+            <th>Enforcement note</th>
+            {admt.map((e) => <td>{cell[e.section]?.enforcement}</td>)}
+          </tr>
+          <tr>
+            <th>Full entry</th>
+            {
+              admt.map((e) => (
+                <td>
+                  <a href={u(`/sources/${e.slug}/`)}>Register &sect; {e.section}</a>
+                </td>
+              ))
+            }
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p
+      style="font-size:12.5px;color:oklch(0.58 0.02 265);margin-top:16px;max-width:70ch"
+    >
+      Cells summarize the register entry as verified on its stated date. Where a
+      cell would require detail the entry does not yet carry, it points to the
+      full entry instead of guessing.
+    </p>
+  </div>
+
+  <div class="sec">
+    <h2 class="h2">How a crosswalk gets built</h2>
+    <p class="lead">
+      A crosswalk is added when four or more instruments in the register cover a
+      shared subject and a reader would otherwise have to open every entry to
+      compare them. Rows are fixed questions asked of every instrument. Each
+      answer traces to one register entry and inherits that entry’s
+      last-verified date.
+    </p>
+    <a href={u("/submit/")} class="link-arrow" style="margin-top:18px"
+      >Request a crosswalk &rarr;</a
+    >
+  </div>
+</Base>

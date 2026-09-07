@@ -1,0 +1,353 @@
+---
+import Base from "../../layouts/Base.astro";
+import StandingDot from "../../components/StandingDot.astro";
+import { entries, type Entry } from "../../lib/entries";
+import { shortDate, longDate } from "../../lib/format";
+import { u } from "../../lib/url";
+import {
+  entryJsonLd,
+  breadcrumbJsonLd,
+  organizationJsonLd,
+} from "../../lib/jsonld";
+
+export function getStaticPaths() {
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: Entry;
+}
+const { entry } = Astro.props as Props;
+const d = entry.dossier;
+
+const kindLabel: Record<string, string> = {
+  statute: "Statute",
+  regulation: "Regulation",
+  executive_order: "Executive order",
+  agency_guidance: "Agency guidance",
+  interpretive_opinion: "Interpretive opinion",
+  advisory: "Advisory",
+  standard: "Standard",
+};
+---
+
+<Base
+  title={entry.name}
+  description={entry.gloss}
+  path={`/sources/${entry.slug}/`}
+  nav="register"
+  metaLabel={`Last verified ${entry.verifiedAt}`}
+  jsonld={[
+    entryJsonLd(entry),
+    breadcrumbJsonLd(entry),
+    organizationJsonLd(),
+  ]}
+>
+  <!-- ENTRY HEADER -->
+  <div
+    class="pad void"
+    style="padding-top:44px;padding-bottom:44px;border-bottom:1px solid oklch(0.27 0.017 265)"
+  >
+    <div class="kicker">
+      {entry.jurisdiction} &middot; {kindLabel[entry.sourceKind] ?? "Instrument"}
+    </div>
+    <h1
+      class="h1"
+      style="font-size:36px;line-height:1.15;margin-top:10px;max-width:26ch"
+    >
+      {entry.name}
+    </h1>
+    <div
+      class="mono"
+      style="font-size:13px;color:oklch(0.62 0.02 265);margin-top:10px"
+    >
+      {entry.citation}
+    </div>
+    <div
+      style="display:flex;gap:28px;flex-wrap:wrap;margin-top:22px;font-size:13.5px"
+    >
+      <div><StandingDot standing={entry.standing} /></div>
+      {
+        entry.effectiveDate && (
+          <div class="mono" style="color:oklch(0.7 0.02 265)">
+            Effective {shortDate(entry.effectiveDate)}
+          </div>
+        )
+      }
+      <div class="mono" style="color:oklch(0.7 0.02 265)">
+        Verified {shortDate(entry.verifiedAt)}
+      </div>
+    </div>
+    <p
+      style="font-size:16px;line-height:1.6;color:oklch(0.8 0.012 265);max-width:70ch;margin-top:20px"
+    >
+      {entry.gloss}
+    </p>
+    <div style="margin-top:18px">
+      <a href={entry.sourceUrl} rel="nofollow" class="link-arrow"
+        >Primary source: {entry.sourceLabel} &rarr;</a
+      >
+    </div>
+  </div>
+
+  {
+    d ? (
+      <>
+        <div class="sec">
+          <div class="kicker" style="margin-bottom:14px">
+            Executive brief
+          </div>
+          {d.executiveBrief.map((para, i) => (
+            <p
+              style={`line-height:1.68;max-width:74ch;${i === 0 ? "font-size:18px;color:oklch(0.92 0.008 265)" : "font-size:15px;color:oklch(0.75 0.014 265);margin-top:18px"}`}
+            >
+              {para}
+            </p>
+          ))}
+          <div
+            style="margin-top:24px;padding-top:20px;border-top:1px solid oklch(0.24 0.016 265)"
+          >
+            <div class="kicker" style="margin-bottom:8px">
+              Who it binds
+            </div>
+            <p
+              style="font-size:14.5px;line-height:1.6;color:oklch(0.78 0.015 265);max-width:70ch"
+            >
+              {d.whoItBinds}
+            </p>
+          </div>
+        </div>
+
+        <div class="sec">
+          <h2 class="h2">Value-add scorecard</h2>
+          <p class="lead">
+            Ten metrics scoring the instrument for a technical team, on a 1&ndash;5
+            scale.
+          </p>
+          <div
+            data-collapse
+            style="display:grid;grid-template-columns:1fr 1fr;gap:28px 40px;margin-top:28px"
+          >
+            {d.scorecard.map((item) => (
+              <div>
+                <div
+                  style="display:flex;justify-content:space-between;font-size:13.5px;font-weight:500"
+                >
+                  <span>{item.metric}</span>
+                  <span class="mono" style="color:oklch(0.6 0.02 265)">
+                    {item.score}/{item.max}
+                  </span>
+                </div>
+                <div class="bar-track">
+                  <div
+                    class="bar-fill"
+                    style={`width:${(item.score / item.max) * 100}%`}
+                  />
+                </div>
+                <p
+                  style="font-size:13px;color:oklch(0.68 0.02 265);margin-top:8px"
+                >
+                  {item.rationale}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="sec" style="background:oklch(0.16 0.013 265)">
+          <div class="kicker">The paradigm shift</div>
+          <h2
+            style="font-size:26px;font-weight:600;letter-spacing:-0.02em;margin-top:10px;max-width:26ch"
+          >
+            {d.paradigmShiftTitle}
+          </h2>
+          <p
+            style="font-size:15.5px;line-height:1.68;color:oklch(0.8 0.012 265);max-width:74ch;margin-top:16px"
+          >
+            {d.paradigmShiftBody}
+          </p>
+        </div>
+
+        <div class="sec">
+          <h2 class="h2">Historical evolution</h2>
+          <div style="margin-top:20px">
+            {d.timeline.map((t) => (
+              <div
+                class="row-2"
+                data-collapse
+                style="grid-template-columns:120px 1fr"
+              >
+                <span
+                  class="mono"
+                  style="font-size:13px;color:oklch(0.62 0.02 265)"
+                >
+                  {shortDate(t.date)}
+                </span>
+                <span
+                  style="font-size:14.5px;color:oklch(0.82 0.012 265)"
+                >
+                  {t.event}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div
+          class="sec"
+          data-collapse
+          style="display:grid;grid-template-columns:1fr 1.3fr;gap:48px"
+        >
+          <div>
+            <h2 class="h2">Maps to</h2>
+            <div style="margin-top:18px">
+              {entry.frameworks.map((f) => (
+                <div
+                  style="padding:12px 0;border-top:1px solid oklch(0.24 0.016 265);display:flex;justify-content:space-between;gap:16px"
+                >
+                  <span style="font-size:14px;font-weight:500">
+                    {f.framework}
+                  </span>
+                  <span
+                    class="mono"
+                    style="font-size:12.5px;color:oklch(0.62 0.02 265);text-align:right"
+                  >
+                    {f.ref}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <div
+              style="margin-top:28px;padding-top:20px;border-top:1px solid oklch(0.24 0.016 265)"
+            >
+              <div class="kicker" style="margin-bottom:8px">
+                Penalties
+              </div>
+              <p
+                style="font-size:13.5px;line-height:1.6;color:oklch(0.75 0.014 265)"
+              >
+                {d.penalties}
+              </p>
+            </div>
+          </div>
+          <div>
+            <h2 class="h2">Developer &amp; architect checklist</h2>
+            <div style="margin-top:18px">
+              {d.checklist.map((c) => (
+                <div class="check-item">
+                  <span class="checkbox" />
+                  <span
+                    style="font-size:14px;line-height:1.55;color:oklch(0.85 0.015 265)"
+                  >
+                    {c}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div class="sec">
+          <h2 class="h2">Pitfalls &amp; defensive plays</h2>
+          <div class="grid-2" data-collapse style="margin-top:22px">
+            {d.pitfalls.map((p) => (
+              <div class="card">
+                <div
+                  style="font-size:15.5px;font-weight:600;margin-bottom:14px"
+                >
+                  {p.title}
+                </div>
+                <div class="kicker" style="margin-bottom:5px">
+                  The problem
+                </div>
+                <p
+                  style="font-size:13.5px;line-height:1.55;color:oklch(0.78 0.015 265);margin-bottom:14px"
+                >
+                  {p.problem}
+                </p>
+                <div class="kicker" style="margin-bottom:5px">
+                  The trap
+                </div>
+                <p
+                  style="font-size:13.5px;line-height:1.55;color:oklch(0.78 0.015 265);margin-bottom:14px"
+                >
+                  {p.trap}
+                </p>
+                <div class="kicker" style="margin-bottom:5px">
+                  The defensive play
+                </div>
+                <p
+                  style="font-size:13.5px;line-height:1.55;color:oklch(0.78 0.015 265)"
+                >
+                  {p.defensivePlay}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </>
+    ) : (
+      <div class="sec">
+        <h2 class="h2">What it does</h2>
+        <p class="body-text">{entry.gloss}</p>
+        {entry.frameworks.length > 0 && (
+          <div style="margin-top:30px;max-width:74ch">
+            <div class="kicker" style="margin-bottom:8px">
+              Maps to
+            </div>
+            {entry.frameworks.map((f) => (
+              <div
+                style="padding:12px 0;border-top:1px solid oklch(0.24 0.016 265);display:flex;justify-content:space-between;gap:16px"
+              >
+                <span style="font-size:14px;font-weight:500">
+                  {f.framework}
+                </span>
+                <span
+                  class="mono"
+                  style="font-size:12.5px;color:oklch(0.62 0.02 265);text-align:right"
+                >
+                  {f.ref}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+        <p
+          style="font-size:12.5px;color:oklch(0.58 0.02 265);margin-top:28px;max-width:70ch"
+        >
+          This entry carries the register summary and the primary source only. A
+          full brief &mdash; scorecard, timeline, checklist, pitfalls &mdash; is
+          published for instruments as they are worked through.
+          <a href={u("/method/")}>How entries are built</a>.
+        </p>
+      </div>
+    )
+  }
+
+  <!-- CITE -->
+  <div class="sec">
+    <h2 class="h2">Cite this entry</h2>
+    <p class="lead">
+      Permanent URL and a fixed set of fields. Text licensed CC BY 4.0.
+    </p>
+    <div
+      style="border:1px solid oklch(0.27 0.017 265);border-radius:10px;padding:22px 24px;margin-top:20px;max-width:640px"
+    >
+      <div
+        class="mono"
+        style="font-size:12.5px;line-height:2;color:oklch(0.85 0.015 265)"
+      >
+        AI Reg. Index, {entry.name}, &sect; {entry.section}<br />
+        airegindex.com/sources/{entry.slug}<br />
+        last verified {longDate(entry.verifiedAt)}<br />
+        <span style="color:oklch(0.58 0.02 265)">CC BY 4.0</span>
+      </div>
+    </div>
+    <div style="margin-top:18px">
+      <a href={u("/")} class="link-arrow">&larr; Back to the register</a>
+    </div>
+  </div>
+</Base>

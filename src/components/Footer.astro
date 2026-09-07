@@ -1,0 +1,78 @@
+---
+import site from "../data/site.json";
+import { u } from "../lib/url";
+
+const registerLinks = [
+  { label: "All instruments", href: u("/") },
+  { label: "Deadlines", href: u("/deadlines/") },
+  { label: "Comparisons", href: u("/comparisons/") },
+  { label: "Amendments", href: u("/amendments/") },
+];
+const useLinks = [
+  { label: "Method", href: u("/method/") },
+  { label: "How to cite", href: u("/cite/") },
+  { label: "Data & API", href: u("/data/") },
+  { label: "Submit a correction", href: u("/submit/") },
+];
+---
+
+<footer
+  class="pad void"
+  style="border-top:1px solid oklch(0.27 0.017 265);padding-top:34px;padding-bottom:32px"
+>
+  <div
+    style="display:flex;justify-content:space-between;gap:56px;flex-wrap:wrap"
+  >
+    <p
+      style="max-width:44ch;font-size:13px;line-height:1.6;color:oklch(0.62 0.02 265)"
+    >
+      The AI Reg. Index is a public reference published and maintained by
+      <a href={site.publisher.url}>SolidCore.ai</a>. Entries cite government
+      primary sources only and name no vendor, SolidCore.ai included.
+    </p>
+    <div style="display:flex;gap:52px;flex-wrap:wrap;font-size:13px">
+      <div>
+        <div
+          class="mono"
+          style="color:oklch(0.56 0.02 265);font-size:10px;letter-spacing:0.1em;margin-bottom:11px"
+        >
+          REGISTER
+        </div>
+        {
+          registerLinks.map((l) => (
+            <a
+              href={l.href}
+              style="display:block;color:oklch(0.74 0.015 265);margin-bottom:7px"
+            >
+              {l.label}
+            </a>
+          ))
+        }
+      </div>
+      <div>
+        <div
+          class="mono"
+          style="color:oklch(0.56 0.02 265);font-size:10px;letter-spacing:0.1em;margin-bottom:11px"
+        >
+          USE
+        </div>
+        {
+          useLinks.map((l) => (
+            <a
+              href={l.href}
+              style="display:block;color:oklch(0.74 0.015 265);margin-bottom:7px"
+            >
+              {l.label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+  <div
+    class="mono"
+    style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:oklch(0.48 0.02 265);border-top:1px solid oklch(0.24 0.016 265);margin-top:28px;padding-top:16px"
+  >
+    Vol. 2026 &middot; text licensed CC BY 4.0 &middot; airegindex.com
+  </div>
+</footer>

@@ -1,0 +1,10 @@
+---
+export interface Props {
+  node: Record<string, unknown>;
+}
+const { node } = Astro.props;
+---
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify(node)}
+/>

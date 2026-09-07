@@ -1,0 +1,53 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHeader from "../components/PageHeader.astro";
+---
+
+<Base
+  title="How to cite"
+  description="How to cite the AI Reg. Index: entry, comparison, and dataset citation formats, and the CC BY 4.0 attribution string."
+  path="/cite/"
+  nav={null}
+>
+  <PageHeader
+    kicker="Attribution"
+    title="How to cite"
+    intro="Register text is licensed CC BY 4.0. Cite the entry, not just the site, so a reader can check the same source and verification date you used."
+  />
+
+  <div class="sec">
+    <h2 class="h2">A register entry</h2>
+    <div class="cite-box">
+      AI Reg. Index. &ldquo;EU AI Act: Article 50 &mdash; Transparency &amp;
+      Synthetic Media Disclosures.&rdquo; &sect; 8.
+      airegindex.com/sources/eu-ai-act-article-50-transparency-and-synthetic-media-disclosures.
+      Last verified 30 July 2026.
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2 class="h2">A comparison</h2>
+    <div class="cite-box">
+      AI Reg. Index. &ldquo;Automated decision-making disclosure laws (United
+      States).&rdquo; airegindex.com/comparisons. Retrieved 5 September 2026.
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2 class="h2">The dataset</h2>
+    <div class="cite-box">
+      AI Reg. Index [dataset]. airegindex.com/register.json. Retrieved 5
+      September 2026.
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2 class="h2">Notes</h2>
+    <p class="body-text">
+      Each entry has a permanent URL built from its jurisdiction and short
+      name; the URL does not change when the entry is re-verified. The primary
+      documents themselves are the property of the governments and standards
+      bodies that publish them &mdash; cite those directly when you can.
+    </p>
+  </div>
+</Base>

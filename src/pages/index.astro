@@ -1,0 +1,414 @@
+---
+import Base from "../layouts/Base.astro";
+import StandingDot from "../components/StandingDot.astro";
+import site from "../data/site.json";
+import {
+  entries,
+  entriesByGroup,
+  amendments,
+  effectiveByYear,
+  datedEntries,
+} from "../lib/entries";
+import { shortDate, standingBucket } from "../lib/format";
+import { u } from "../lib/url";
+import {
+  datasetJsonLd,
+  organizationJsonLd,
+} from "../lib/jsonld";
+
+const groups = entriesByGroup();
+const byYear = effectiveByYear();
+const maxYear = Math.max(...byYear.map((y) => y.count));
+const dated = datedEntries().length;
+const total = entries.length;
+
+const buckets = entries.map((e) => standingBucket(e.standing));
+const inForce = buckets.filter((b) => b === "in-force").length;
+const enacted = buckets.filter((b) => b === "enacted").length;
+const draft = buckets.filter((b) => b === "draft").length;
+const struck = buckets.filter((b) => b === "struck-down").length;
+
+const TODAY = "2026-09-05";
+const upcoming = datedEntries().filter((e) => e.effectiveDate! >= TODAY);
+
+const recent = amendments.slice(0, 3);
+---
+
+<Base
+  title="Register"
+  description={site.description}
+  path="/"
+  nav="register"
+  metaLabel={`Last verified ${site.lastVerified}`}
+  jsonld={[datasetJsonLd(total), organizationJsonLd()]}
+>
+  <!-- HERO -->
+  <div
+    class="pad void"
+    data-collapse
+    style="padding-top:60px;padding-bottom:56px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:56px;align-items:start"
+  >
+    <div>
+      <h1
+        class="h1"
+        style="font-size:44px;letter-spacing:-0.035em;line-height:1.1;max-width:17ch"
+      >
+        {site.tagline}
+      </h1>
+      <p
+        style="font-size:16px;line-height:1.62;color:oklch(0.78 0.015 265);max-width:56ch;margin-top:22px"
+      >
+        Twenty-nine instruments: US federal orders and guidance, thirteen US
+        state and local laws, the EU AI Act and EDPB, and the main
+        international standards and security advisories. Each entry is written
+        in plain language and linked to the government source. Several are
+        cross-referenced to the NIST AI RMF.
+      </p>
+      <div style="margin-top:26px">
+        <a href="#register" class="btn">Open the register</a>
+      </div>
+    </div>
+
+    <div
+      style="border:1px solid oklch(0.27 0.017 265);background:oklch(0.16 0.013 265)"
+    >
+      <div
+        class="mono"
+        style="display:flex;justify-content:space-between;padding:14px 20px;border-bottom:1px solid oklch(0.27 0.017 265);font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:oklch(0.6 0.02 265)"
+      >
+        <span>Recent changes</span><span>Last 90 days</span>
+      </div>
+      <div style="padding:4px 20px 16px">
+        {
+          recent.map((a, i) => (
+            <div
+              style={`padding:14px 0;${i < recent.length - 1 ? "border-bottom:1px solid oklch(0.24 0.016 265)" : ""}`}
+            >
+              <div
+                class="mono"
+                style="font-size:11px;color:oklch(0.6 0.02 265);margin-bottom:5px"
+              >
+                {a.date}
+              </div>
+              <div
+                style="font-size:14.5px;line-height:1.5;color:oklch(0.85 0.015 265)"
+              >
+                {a.instrument}: {a.body}
+              </div>
+            </div>
+          ))
+        }
+        <a href={u("/amendments/")} class="link-arrow" style="margin-top:12px"
+          >All changes &rarr;</a
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- VELOCITY -->
+  <div class="sec">
+    <div
+      data-collapse
+      style="display:grid;grid-template-columns:minmax(0,0.82fr) minmax(0,1.18fr);gap:56px;align-items:center"
+    >
+      <div>
+        <h2 class="h2">New obligations by year</h2>
+        <p class="lead">
+          {dated} of the {total} instruments carry a firm start date. The 2026
+          effective dates are the bulk of the near-term compliance load. The
+          rest are open-ended guidance or bills with no date yet.
+        </p>
+      </div>
+      <div>
+        <div class="bars">
+          {
+            byYear.map((y) => (
+              <div class="bar-col">
+                <span
+                  class="bar-n"
+                  style={y.count === maxYear ? "color:oklch(0.85 0.17 130)" : ""}
+                >
+                  {y.count}
+                </span>
+                <div
+                  title={`${y.year}: ${y.count}`}
+                  style={`width:100%;height:${Math.round((y.count / maxYear) * 180)}px;background:${y.count === maxYear ? "oklch(0.85 0.17 130)" : "oklch(0.4 0.03 265)"};border-radius:3px 3px 0 0`}
+                />
+              </div>
+            ))
+          }
+        </div>
+        <div
+          class="mono"
+          style="display:flex;gap:16px;margin-top:8px;font-size:11px;color:oklch(0.58 0.02 265)"
+        >
+          {
+            byYear.map((y) => (
+              <span style="flex:1;text-align:center">{y.year}</span>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGISTER -->
+  <div class="sec" id="register">
+    <h2 class="h2">The register</h2>
+    <p class="lead">
+      {total} instruments, grouped by jurisdiction and ordered by section.
+      {inForce} are in force or in effect, {enacted} are enacted but not yet effective,
+      {draft} are in draft or pending, and {struck} were struck down. The rest are
+      voluntary standards or advisories. The last column shows when an editor
+      last confirmed the entry against its source.
+    </p>
+
+    <div class="table-scroll">
+      <table class="reg">
+        <thead>
+          <tr class="reg-head">
+            <th style="width:48px">&sect;</th>
+            <th>INSTRUMENT</th>
+            <th style="width:180px">STANDING</th>
+            <th style="width:130px">EFFECTIVE</th>
+            <th style="width:110px;text-align:right">VERIFIED</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            groups.map((g) => (
+              <>
+                <tr class="reg-group">
+                  <td colspan="5">{g.group}</td>
+                </tr>
+                {g.items.map((e) => {
+                  const dead = e.bucket === "struck-down";
+                  return (
+                    <tr class="reg-row">
+                      <td
+                        class="mono reg-sec"
+                        style={dead ? "color:oklch(0.45 0.02 265)" : ""}
+                      >
+                        &sect;&nbsp;{e.section}
+                      </td>
+                      <td>
+                        <a
+                          href={u(`/sources/${e.slug}/`)}
+                          class={dead ? "gone" : "reg-name"}
+                          style={dead ? "font-size:15.5px" : ""}
+                        >
+                          {e.name}
+                        </a>
+                        <div class="mono reg-cite">{e.citation}</div>
+                      </td>
+                      <td
+                        class="reg-standing"
+                        style={dead ? "color:oklch(0.58 0.02 265)" : ""}
+                      >
+                        <StandingDot standing={e.standing} />
+                      </td>
+                      <td
+                        class="mono reg-date"
+                        style={dead ? "color:oklch(0.5 0.02 265)" : ""}
+                      >
+                        {shortDate(e.effectiveDate)}
+                      </td>
+                      <td
+                        class="mono reg-verified"
+                        style={dead ? "color:oklch(0.48 0.02 265)" : ""}
+                      >
+                        {shortDate(e.verifiedAt)}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div
+      class="mono"
+      style="display:flex;gap:18px;flex-wrap:wrap;margin-top:16px;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:oklch(0.56 0.02 265)"
+    >
+      <span style="color:oklch(0.64 0.02 265)">Standing</span>
+      <span><span class="dot" style="background:oklch(0.46 0.06 200)"></span>Draft</span>
+      <span><span class="dot" style="background:oklch(0.6 0.1 165)"></span>Advisory</span>
+      <span><span class="dot" style="background:oklch(0.73 0.14 145)"></span>Enacted</span>
+      <span><span class="dot" style="background:oklch(0.85 0.17 130)"></span>In force</span>
+      <span><span class="dot" style="background:oklch(0.5 0.02 265)"></span>Struck down</span>
+    </div>
+  </div>
+
+  <!-- TAKES EFFECT NEXT -->
+  <div class="sec">
+    <h2 class="h2">What takes effect next</h2>
+    <p class="lead">
+      The nearest dated obligations in the register. The full list, earlier and
+      later, is on the Deadlines page.
+    </p>
+    <div style="margin-top:22px;max-width:80ch">
+      <div class="row-2" data-collapse style="grid-template-columns:120px 1fr">
+        <div class="mono" style="font-size:13px;color:oklch(0.7 0.02 265)">
+          2 Dec 2026
+        </div>
+        <div style="font-size:14.5px;color:oklch(0.85 0.015 265)">
+          EU AI Act Article 50(2) machine-readable watermarking: transition
+          deadline for systems already on the EU market.
+        </div>
+      </div>
+      {
+        upcoming.map((e) => (
+          <div
+            class="row-2"
+            data-collapse
+            style="grid-template-columns:120px 1fr"
+          >
+            <div
+              class="mono"
+              style="font-size:13px;color:oklch(0.85 0.17 130)"
+            >
+              {shortDate(e.effectiveDate)}
+            </div>
+            <div style="font-size:14.5px;color:oklch(0.85 0.015 265)">
+              <a href={u(`/sources/${e.slug}/`)}>{e.name}</a> &mdash;{" "}
+              {e.jurisdiction}.
+            </div>
+          </div>
+        ))
+      }
+    </div>
+    <div style="margin-top:20px">
+      <a href={u("/deadlines/")} class="link-arrow">Full deadline list &rarr;</a>
+    </div>
+  </div>
+
+  <!-- METHOD -->
+  <div class="sec" id="method">
+    <h2 class="h2">How the register stays current</h2>
+    <p class="lead">
+      Every entry shows the date it was last confirmed against its source. The
+      same three practices keep that date accurate.
+    </p>
+    <div
+      data-collapse
+      style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:28px"
+    >
+      <div style="padding-right:28px;border-right:1px solid oklch(0.24 0.016 265)">
+        <div
+          style="font-size:15px;font-weight:600;color:oklch(0.92 0.008 265);margin-bottom:10px"
+        >
+          Monitoring
+        </div>
+        <p style="font-size:14px;line-height:1.6;color:oklch(0.78 0.015 265)">
+          Each government source is read again on a regular schedule and
+          compared with the version already on the register.
+        </p>
+      </div>
+      <div style="padding:0 28px;border-right:1px solid oklch(0.24 0.016 265)">
+        <div
+          style="font-size:15px;font-weight:600;color:oklch(0.92 0.008 265);margin-bottom:10px"
+        >
+          Sources
+        </div>
+        <p style="font-size:14px;line-height:1.6;color:oklch(0.78 0.015 265)">
+          Entries quote the government source only: the gazette, the official
+          register, or the issuing agency. Trackers and law-firm notes point us
+          to what to look at, nothing more.
+        </p>
+      </div>
+      <div style="padding-left:28px">
+        <div
+          style="font-size:15px;font-weight:600;color:oklch(0.92 0.008 265);margin-bottom:10px"
+        >
+          Corrections
+        </div>
+        <p style="font-size:14px;line-height:1.6;color:oklch(0.78 0.015 265)">
+          When an entry changes, the change is recorded with a date. Entries
+          are not edited in place.
+        </p>
+      </div>
+    </div>
+    <div style="margin-top:24px;display:flex;gap:28px;flex-wrap:wrap">
+      <a href={u("/method/")} class="link-arrow">Read the full method &rarr;</a>
+      <a href={u("/submit/")} class="link-arrow">Request a source &rarr;</a>
+    </div>
+  </div>
+
+  <!-- CITE / DATA -->
+  <div class="sec" id="data">
+    <h2 class="h2">Cite an entry, or take the data</h2>
+    <p class="lead">
+      Every entry has a permanent URL and a fixed set of fields. The text is
+      licensed CC BY 4.0. Use it with attribution.
+    </p>
+    <div
+      data-collapse
+      style="display:grid;grid-template-columns:1fr 1fr;gap:44px;margin-top:26px"
+    >
+      <div>
+        <div
+          class="mono kicker"
+          style="margin-bottom:12px"
+        >
+          Citation
+        </div>
+        <div class="cite-box">
+          AI Reg. Index, EU AI Act: Article 50, &sect; 8<br />
+          <a href={u("/sources/eu-ai-act-article-50-transparency-and-synthetic-media-disclosures/")}
+            >airegindex.com/sources/eu-ai-act-article-50&hellip;</a
+          ><br />
+          last verified 2026-07-30<br />
+          <span style="color:oklch(0.58 0.02 265)">CC BY 4.0</span>
+        </div>
+      </div>
+      <div>
+        <div class="mono kicker" style="margin-bottom:12px">Full export</div>
+        <p
+          style="font-size:14px;line-height:1.6;color:oklch(0.78 0.015 265);margin-bottom:14px"
+        >
+          The whole register, all {total} entries, as one file with a Dataset
+          schema.org block.
+        </p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a href={u("/register.json")} class="btn">register.json</a>
+          <a href={u("/data/")} class="btn-ghost">API &amp; fields</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBSCRIBE -->
+  <div
+    class="sec"
+    style="display:flex;justify-content:space-between;align-items:center;gap:36px;flex-wrap:wrap"
+  >
+    <div style="max-width:44ch">
+      <div style="font-size:17px;font-weight:600;color:oklch(0.94 0.006 265)">
+        Get an email when the register changes
+      </div>
+      <p
+        style="font-size:13.5px;line-height:1.55;color:oklch(0.68 0.02 265);margin-top:6px"
+      >
+        One message when an entry is amended, added, or removed. Nothing else.
+      </p>
+    </div>
+    <form
+      style="display:flex;gap:10px;flex-wrap:wrap"
+      action={u("/submit/")}
+      method="get"
+    >
+      <input
+        type="email"
+        name="email"
+        class="field"
+        placeholder="you@company.com"
+        style="width:260px"
+        aria-label="Email address"
+      />
+      <button type="submit" class="btn">Subscribe</button>
+    </form>
+  </div>
+</Base>
