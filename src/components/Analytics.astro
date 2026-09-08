@@ -1,0 +1,19 @@
+---
+// Google Analytics 4. Cookieless (client_storage: 'none') so no consent
+// banner is needed. Rendered only in production builds — see Base.astro.
+---
+<script
+  is:inline
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-T26D37SH24"></script>
+<script is:inline>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+  gtag("config", "G-T26D37SH24", {
+    client_storage: "none",
+    anonymize_ip: true,
+  });
+</script>

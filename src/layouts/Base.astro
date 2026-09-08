@@ -3,6 +3,7 @@ import site from "../data/site.json";
 import Masthead from "../components/Masthead.astro";
 import Footer from "../components/Footer.astro";
 import JsonLd from "../components/JsonLd.astro";
+import Analytics from "../components/Analytics.astro";
 import { u, isPreview } from "../lib/url";
 
 export interface Props {
@@ -34,17 +35,10 @@ const fullTitle =
 <!doctype html>
 <html lang="en">
   <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-T26D37SH24"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-T26D37SH24');
-</script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {import.meta.env.PROD && <Analytics />}
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
