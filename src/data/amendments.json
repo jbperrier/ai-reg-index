@@ -1,17 +1,24 @@
 [
   {
     "date": "2026-08",
+    "section": 11,
+    "instrument": "OWASP Top 10 for LLM Applications",
+    "kind": "new edition",
+    "body": "The 2026 edition supersedes the 2024 (v2.0) list. Prompt injection stays at number one, excessive agency rises to number three, and the ranking now weights about 7,700 real-world incidents against the community vote. Published by the OWASP GenAI Security Project on 4 August 2026."
+  },
+  {
+    "date": "2026-07",
     "section": 8,
     "instrument": "EU AI Act: Article 50",
-    "kind": "amended",
-    "body": "Amended by Regulation (EU) 2026/1744, the Digital Omnibus on AI. The machine-readable watermarking obligation in Article 50(2) is extended to 2 December 2026 for systems already on the market."
+    "kind": "transitional period",
+    "body": "The Digital Omnibus on AI (Regulation (EU) 2026/1744) left the text of Article 50 unchanged but added a transitional period: systems already on the market before 2 August 2026 have until 2 December 2026 to meet the Article 50(2) machine-readable marking obligation."
   },
   {
     "date": "2026-07",
     "section": 15,
     "instrument": "Colorado ADMT Act",
     "kind": "repeal & replace",
-    "body": "SB 26-189 repeals the earlier SB 24-205 and replaces it with a consequential-decision disclosure regime. Enforcement is stayed pending xAI v. Weiser."
+    "body": "SB 26-189 repeals the earlier SB 24-205 and replaces it with a consequential-decision disclosure regime, effective 1 January 2027. A federal court had blocked enforcement of SB 24-205 in April 2026 (xAI v. Weiser) before the replacement was signed."
   },
   {
     "date": "2026-04",

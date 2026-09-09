@@ -16,7 +16,15 @@ export default defineConfig({
   // ("maintained by" + <a>SolidCore.ai</a> -> "maintained bySolidCore.ai").
   // 'true' is lossless HTML minification and keeps that space.
   compressHTML: true,
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      // Drop the redirect stub kept at the pre-rename OWASP URL.
+      filter: (page) =>
+        !page.includes(
+          "/sources/owasp-top-10-for-large-language-model-applications-v2-0/",
+        ),
+    }),
+  ],
   build: {
     format: "directory",
   },

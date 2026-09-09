@@ -99,7 +99,7 @@
           "3": "The Govern, Map, Measure, and Manage functions, plus a companion Playbook of suggested actions.",
           "4": "Twelve generative-AI risk vectors — confabulation, data privacy, supply-chain integrity and others — mapped to AI RMF actions.",
           "29": "Auditable requirements for setting up, running, and improving an AI management system.",
-          "11": "The ten critical LLM-application risks, including prompt injection, insecure output handling, and excessive agency."
+          "11": "The ten critical LLM-application risks, including prompt injection, improper output handling, and excessive agency."
         }
       },
       {

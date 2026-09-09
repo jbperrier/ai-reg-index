@@ -159,16 +159,16 @@
   {
     "section": 11,
     "jurisdiction": "International",
-    "name": "OWASP Top 10 for Large Language Model Applications (v2.0)",
-    "citation": "OWASP Top 10 for LLM Applications v2.0",
+    "name": "OWASP Top 10 for LLM Applications (2026)",
+    "citation": "OWASP GenAI Security Project, Top 10 for LLM Applications 2026",
     "standing": "Published",
-    "effectiveDate": "2024-11-18",
+    "effectiveDate": "2026-08-04",
     "verifiedAt": "2026-09-09",
-    "gloss": "The de facto industry secure-development vulnerability standard, targeting critical LLM risks like prompt injection, insecure output handling, and excessive agency.",
+    "gloss": "The de facto secure-development reference for LLM applications. The 2026 edition keeps prompt injection at number one, raises excessive agency to number three, and weights roughly 7,700 real-world incidents against the community vote; an appendix maps each risk to NIST AI RMF, NIST AI 600-1, MITRE ATLAS, and the CSA AI Controls Matrix.",
     "tags": ["LLMSecurity", "PromptInjection", "OWASP"],
     "sourceKind": "standard",
-    "sourceUrl": "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
-    "sourceLabel": "OWASP Top 10 for LLM Applications v2.0",
+    "sourceUrl": "https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/",
+    "sourceLabel": "OWASP Top 10 for LLM Applications 2026",
     "frameworks": []
   },
   {
