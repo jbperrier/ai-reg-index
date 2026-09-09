@@ -28,6 +28,14 @@ export function longDate(iso: string | null | undefined): string {
   return `${Number(d)} ${FULL[mi]} ${y}`;
 }
 
+/** Trim a string to a meta-description length at a word boundary. */
+export function metaDescription(s: string, max = 158): string {
+  if (s.length <= max) return s;
+  const cut = s.slice(0, max);
+  const at = cut.lastIndexOf(" ");
+  return `${cut.slice(0, at > 40 ? at : max).replace(/[.,;:\s]+$/, "")}…`;
+}
+
 /** slugify an instrument name for its URL. */
 export function slugify(name: string): string {
   return name

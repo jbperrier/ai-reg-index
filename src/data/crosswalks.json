@@ -1,0 +1,151 @@
+[
+  {
+    "slug": "us-admt-disclosure",
+    "name": "Automated decision-making disclosure laws (United States)",
+    "blurb": "Four US instruments that regulate automated or algorithmic decisions about people. They differ on which decisions they reach, who must comply, and what the core duty is.",
+    "sections": [5, 15, 18, 19],
+    "rows": [
+      {
+        "label": "What it reaches",
+        "cells": {
+          "5": "Use of automated decision-making technology for “significant decisions” about consumers, under the CCPA framework.",
+          "15": "Automated decision-making that produces a consequential decision about a Colorado resident.",
+          "18": "Predictive data analytics in employment; amends the Human Rights Act and the Consumer Fraud and Deceptive Business Practices Act.",
+          "19": "Automated employment decision tools used to screen NYC job candidates or employees."
+        }
+      },
+      {
+        "label": "Core obligation",
+        "cells": {
+          "5": "Point-of-collection notice, an opt-out toggle that honors Global Privacy Control, and a right to access the decision logic.",
+          "15": "Disclosure to the affected person that an automated system was used in a consequential decision.",
+          "18": "Bars discrimination through predictive analytics and reaches deceptive-practice claims; disclosure and anti-bias duties on employers.",
+          "19": "An independent bias audit within the prior year, published results, and advance notice to candidates."
+        }
+      },
+      {
+        "label": "Enforcement note",
+        "cells": {
+          "5": "Enforced by the California Privacy Protection Agency; obligations phase in on a schedule set in the rules.",
+          "15": "Enforcement paused pending xAI v. Weiser. The Act repeals the earlier SB 24-205.",
+          "18": "Enforced through the Illinois Human Rights Act mechanism.",
+          "19": "Enforced by the NYC Department of Consumer and Worker Protection; civil penalties per violation."
+        }
+      }
+    ]
+  },
+  {
+    "slug": "frontier-model-safety",
+    "name": "Frontier-model safety and transparency regimes",
+    "blurb": "Four regimes aimed at the largest, most capable AI models. They converge on published safety frameworks and incident reporting, and differ on the threshold that pulls a model in and on how hard the obligation bites.",
+    "sections": [17, 23, 28, 2],
+    "rows": [
+      {
+        "label": "Covered models",
+        "cells": {
+          "17": "Frontier developers above a large training-compute threshold.",
+          "23": "Frontier models, on thresholds aligned to California SB 53.",
+          "28": "“High-performance” AI, with a statutory threshold of 10^26 training FLOPs.",
+          "2": "“Covered frontier models” as defined by the order."
+        }
+      },
+      {
+        "label": "Core obligation",
+        "cells": {
+          "17": "Publish a frontier AI safety framework and report critical safety incidents.",
+          "23": "Adopt and disclose a safety and security protocol; report incidents. Creates a dedicated NYDFS oversight office.",
+          "28": "Risk management and transparency duties; large foreign providers above revenue or user thresholds must appoint a domestic representative.",
+          "2": "A voluntary 30-day pre-release review window for covered models, plus a Treasury-led AI Cybersecurity Clearinghouse."
+        }
+      },
+      {
+        "label": "How hard it bites",
+        "cells": {
+          "17": "Statute in force; civil penalties available to the California Attorney General.",
+          "23": "Enacted, effective 1 January 2027; enforcement through the NY Attorney General and NYDFS.",
+          "28": "In force with a one-year grace period on penalties; enforced by the Ministry of Science and ICT.",
+          "2": "Executive order, voluntary. No direct penalty; drives federal coordination and procurement expectations."
+        }
+      }
+    ]
+  },
+  {
+    "slug": "voluntary-frameworks",
+    "name": "Voluntary AI risk and security frameworks",
+    "blurb": "The four non-binding references the field treats as the baseline. Two are US government risk frameworks, one is a certifiable international management standard, one is an application-security checklist.",
+    "sections": [3, 4, 29, 11],
+    "rows": [
+      {
+        "label": "Publisher",
+        "cells": {
+          "3": "NIST (United States).",
+          "4": "NIST (United States).",
+          "29": "ISO and IEC (international).",
+          "11": "OWASP (international, community project)."
+        }
+      },
+      {
+        "label": "Scope",
+        "cells": {
+          "3": "The full AI lifecycle, any AI system.",
+          "4": "Generative AI specifically — a companion profile to the AI RMF.",
+          "29": "An organization’s AI management system.",
+          "11": "Security of applications built on large language models."
+        }
+      },
+      {
+        "label": "What it gives you",
+        "cells": {
+          "3": "The Govern, Map, Measure, and Manage functions, plus a companion Playbook of suggested actions.",
+          "4": "Twelve generative-AI risk vectors — confabulation, data privacy, supply-chain integrity and others — mapped to AI RMF actions.",
+          "29": "Auditable requirements for setting up, running, and improving an AI management system.",
+          "11": "The ten critical LLM-application risks, including prompt injection, insecure output handling, and excessive agency."
+        }
+      },
+      {
+        "label": "Certifiable?",
+        "cells": {
+          "3": "No.",
+          "4": "No.",
+          "29": "Yes — organizations can be certified against it.",
+          "11": "No — it is a reference list, not a conformity scheme."
+        }
+      }
+    ]
+  },
+  {
+    "slug": "genai-disclosure",
+    "name": "Generative-AI transparency and disclosure rules",
+    "blurb": "Four rules governing what a generative or conversational AI system must tell the people it interacts with, and what it must reveal about how it was built.",
+    "sections": [8, 6, 25, 16],
+    "rows": [
+      {
+        "label": "What it covers",
+        "cells": {
+          "8": "Chatbots, generative and biometric systems whose outputs reach the EU.",
+          "6": "Generative AI systems made available to Californians, for models trained since January 2022.",
+          "25": "Public-facing generative AI services offered in mainland China.",
+          "16": "Consumer-facing chatbots available to Colorado users, with added duties where minors may be involved."
+        }
+      },
+      {
+        "label": "Core disclosure duty",
+        "cells": {
+          "8": "Tell users they are interacting with AI, label deepfakes, and mark synthetic content in a machine-readable way.",
+          "6": "Publish a 12-point summary of the training datasets used, with no trade-secret exemption.",
+          "25": "Label AI-generated content and register the service; content and training data must meet CAC content rules.",
+          "16": "Disclose that the user is talking to AI, run age estimation, and follow self-harm response protocols."
+        }
+      },
+      {
+        "label": "Standing and reach",
+        "cells": {
+          "8": "In force, phased; extraterritorial — applies wherever the output reaches an EU user. Fines up to €15M or 3% of global turnover.",
+          "6": "In force since 1 January 2026; enforced by the California Attorney General.",
+          "25": "In force since 15 August 2023; enforced by the Cyberspace Administration of China.",
+          "16": "Enacted, effective 1 January 2027."
+        }
+      }
+    ]
+  }
+]

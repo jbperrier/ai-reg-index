@@ -1,6 +1,7 @@
 import raw from "../data/entries.json";
 import dossiers from "../data/dossiers.json";
 import amendmentsRaw from "../data/amendments.json";
+import crosswalksRaw from "../data/crosswalks.json";
 import { slugify, standingBucket, type StandingBucket } from "./format";
 
 export interface Framework {
@@ -119,6 +120,52 @@ export interface Amendment {
   body: string;
 }
 export const amendments = amendmentsRaw as Amendment[];
+
+export interface CrosswalkRow {
+  label: string;
+  cells: Record<string, string>;
+}
+export interface Crosswalk {
+  slug: string;
+  name: string;
+  blurb: string;
+  sections: number[];
+  rows: CrosswalkRow[];
+}
+export const crosswalks = crosswalksRaw as Crosswalk[];
+
+/** Crosswalk members resolved to Entry objects, in column order. */
+export function crosswalkEntries(cw: Crosswalk): Entry[] {
+  return cw.sections
+    .map((s) => entryBySection(s))
+    .filter((e): e is Entry => Boolean(e));
+}
+
+/** Crosswalks that include a given entry. */
+export function crosswalksForSection(section: number): Crosswalk[] {
+  return crosswalks.filter((cw) => cw.sections.includes(section));
+}
+
+/**
+ * Up to `limit` other entries related to this one — same jurisdiction first,
+ * then a shared tag, then anything in the same region group.
+ */
+export function relatedEntries(entry: Entry, limit = 4): Entry[] {
+  const others = entries.filter((e) => e.section !== entry.section);
+  const score = (e: Entry): number => {
+    let s = 0;
+    if (e.jurisdiction === entry.jurisdiction) s += 100;
+    s += e.tags.filter((t) => entry.tags.includes(t)).length * 10;
+    if (e.group === entry.group) s += 1;
+    return s;
+  };
+  return others
+    .map((e) => ({ e, s: score(e) }))
+    .filter((x) => x.s > 0)
+    .sort((a, b) => b.s - a.s || a.e.section - b.e.section)
+    .slice(0, limit)
+    .map((x) => x.e);
+}
 
 /** Count of dated entries by calendar year of their effective date. */
 export function effectiveByYear(): { year: string; count: number }[] {
