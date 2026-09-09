@@ -5,6 +5,7 @@ import Footer from "../components/Footer.astro";
 import JsonLd from "../components/JsonLd.astro";
 import Analytics from "../components/Analytics.astro";
 import { u, isPreview } from "../lib/url";
+import { metaDescription } from "../lib/format";
 
 export interface Props {
   title: string;
@@ -28,8 +29,13 @@ const {
 } = Astro.props;
 
 const canonical = new URL(path, site.url).href;
+const metaDesc = metaDescription(description);
 const fullTitle =
-  path === "/" ? `${site.name} — ${site.tagline}` : `${title} · ${site.name}`;
+  path === "/"
+    ? `${site.name} — the AI laws that bind an enterprise`
+    : path.startsWith("/sources/")
+      ? title
+      : `${title} · ${site.name}`;
 ---
 
 <!doctype html>
@@ -40,7 +46,7 @@ const fullTitle =
 
     {import.meta.env.PROD && <Analytics />}
     <title>{fullTitle}</title>
-    <meta name="description" content={description} />
+    <meta name="description" content={metaDesc} />
     <link rel="canonical" href={canonical} />
     {
       isPreview || path === "/404/" ? (
@@ -56,7 +62,7 @@ const fullTitle =
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={fullTitle} />
-    <meta property="og:description" content={description} />
+    <meta property="og:description" content={metaDesc} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={new URL("/og.png", site.url).href} />
     <meta property="og:image:width" content="1200" />
@@ -67,7 +73,7 @@ const fullTitle =
     />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:description" content={metaDesc} />
     <meta name="twitter:image" content={new URL("/og.png", site.url).href} />
 
     <link rel="sitemap" href={u("/sitemap-index.xml")} />

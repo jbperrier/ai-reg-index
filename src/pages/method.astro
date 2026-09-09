@@ -35,7 +35,7 @@ const standings = [
   description="How the AI Reg. Index is kept: what goes in, how each entry is verified against its primary source, and what the last-verified date means."
   path="/method/"
   nav="method"
-  metaLabel="Updated Aug 2026"
+  metaLabel="How the register is kept"
 >
   <PageHeader
     kicker="How this register is kept"
@@ -132,10 +132,12 @@ const standings = [
   <div class="sec">
     <h2 class="h2">How changes are caught</h2>
     <p class="body-text">
-      Every source is re-read on a schedule. When the text at a source URL
-      differs from the last version on file, the entry is flagged and returned
-      to the check above before the register updates. Readers can subscribe to
-      be told when a specific entry changes.
+      When an instrument is amended, superseded, or repealed, the change is
+      recorded in the <a href={u("/amendments/")}>amendments log</a> and the
+      entry is re-verified against the new text before the register updates. An
+      automated monitor that re-reads every source on a schedule and flags text
+      changes is in development. Readers can subscribe to hear when the register
+      changes.
     </p>
   </div>
 
