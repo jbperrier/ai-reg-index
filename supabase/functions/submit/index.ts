@@ -15,9 +15,9 @@ const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 
 const FROM = "AI Reg. Index <noreply@airegindex.com>";
 const ALERTS = {
-  correction: ["echiu@solidcore.ai", "cphoenix@solidcore.ai", "hprafullchandra@solidcore.ai"],
-  source: ["echiu@solidcore.ai", "cphoenix@solidcore.ai", "hprafullchandra@solidcore.ai"],
-  subscribe: ["jperrier@solidcore.ai", "echiu@solidcore.ai"],
+  correction: ["AIregister@solidcore.ai"],
+  source: ["AIregister@solidcore.ai"],
+  subscribe: ["AIregister@solidcore.ai"],
 } as const;
 
 const ALLOWED_ORIGINS = [
