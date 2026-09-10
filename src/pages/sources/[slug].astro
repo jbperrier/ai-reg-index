@@ -384,7 +384,9 @@ const kindLabel: Record<string, string> = {
   <div class="sec">
     <h2 class="h2">Cite this entry</h2>
     <p class="lead">
-      Permanent URL and a fixed set of fields. Text licensed CC BY 4.0.
+      The entry&rsquo;s permanent URL is its identifier. Add the date you
+      read it &mdash; the register is updated as sources change. Register
+      text is licensed CC BY 4.0.
     </p>
     <div
       style="border:1px solid oklch(0.27 0.017 265);border-radius:10px;padding:22px 24px;margin-top:20px;max-width:640px"
@@ -393,10 +395,10 @@ const kindLabel: Record<string, string> = {
         class="mono"
         style="font-size:12.5px;line-height:2;color:oklch(0.85 0.015 265)"
       >
-        AI Reg. Index, {entry.name}, &sect; {entry.section}<br />
-        airegindex.com/sources/{entry.slug}<br />
-        last verified {longDate(entry.verifiedAt)}<br />
-        <span style="color:oklch(0.58 0.02 265)">CC BY 4.0</span>
+        AI Reg. Index. &ldquo;{entry.name}.&rdquo; SolidCore.ai. Last verified {
+          longDate(entry.verifiedAt)
+        }. https://airegindex.com/sources/{entry.slug}/ Retrieved [access
+        date].
       </div>
     </div>
     <div style="margin-top:18px">
