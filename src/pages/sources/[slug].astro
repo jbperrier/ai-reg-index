@@ -48,7 +48,7 @@ const kindLabel: Record<string, string> = {
   nav="register"
   metaLabel={`Last verified ${entry.verifiedAt}`}
   jsonld={[
-    entryJsonLd(entry),
+    ...entryJsonLd(entry),
     breadcrumbJsonLd(entry),
     organizationJsonLd(),
   ]}
@@ -395,7 +395,7 @@ const kindLabel: Record<string, string> = {
         class="mono"
         style="font-size:12.5px;line-height:2;color:oklch(0.85 0.015 265)"
       >
-        AI Reg. Index. &ldquo;{entry.name}.&rdquo; SolidCore.ai. Last verified {
+        AI Reg. Index. &ldquo;{entry.name}.&rdquo; Last verified {
           longDate(entry.verifiedAt)
         }. https://airegindex.com/sources/{entry.slug}/ Retrieved [access
         date].

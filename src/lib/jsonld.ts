@@ -18,36 +18,56 @@ function entryUrl(entry: Entry): string {
   return `${site.url}/sources/${entry.slug}/`;
 }
 
-/** schema.org node for a single register entry. */
-export function entryJsonLd(entry: Entry): Record<string, unknown> {
+/**
+ * Two schema.org nodes for a register entry, kept distinct on purpose:
+ * the instrument itself (published by its issuing government or body,
+ * identified by its own primary-source URL) and AI Reg. Index's page
+ * about it (published by AI Reg. Index, `about` the instrument). AI Reg.
+ * Index is not the publisher of the underlying law - collapsing these
+ * into one node would say otherwise.
+ */
+export function entryJsonLd(entry: Entry): Record<string, unknown>[] {
   const isLegislation = LEGISLATION_KINDS.has(entry.sourceKind);
-  const node: Record<string, unknown> = {
+
+  const instrument: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": isLegislation ? "Legislation" : "CreativeWork",
-    "@id": entryUrl(entry),
+    "@id": entry.sourceUrl,
     name: entry.name,
-    description: entry.gloss,
     url: entry.sourceUrl,
-    dateModified: entry.verifiedAt,
-    isPartOf: { "@id": `${site.url}/#dataset` },
     jurisdiction: {
       "@type": "AdministrativeArea",
       name: entry.jurisdiction,
     },
-    publisher: { "@id": `${site.url}/#org` },
   };
-  if (entry.effectiveDate) node.legislationDate = entry.effectiveDate;
+  if (entry.effectiveDate) instrument.legislationDate = entry.effectiveDate;
   if (isLegislation) {
-    node.legislationType =
+    instrument.legislationType =
       entry.sourceKind === "executive_order"
         ? "Executive Order"
         : entry.sourceKind === "regulation"
           ? "Regulation"
           : "Statute";
   } else {
-    node.genre = GENRE_LABEL[entry.sourceKind] ?? "Guidance";
+    instrument.genre = GENRE_LABEL[entry.sourceKind] ?? "Guidance";
   }
-  return node;
+
+  const page: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": entryUrl(entry),
+    name: entry.name,
+    description: entry.gloss,
+    url: entryUrl(entry),
+    dateModified: entry.verifiedAt,
+    license: site.license.url,
+    isPartOf: { "@id": `${site.url}/#dataset` },
+    publisher: { "@id": `${site.url}/#org` },
+    about: { "@id": entry.sourceUrl },
+    isBasedOn: entry.sourceUrl,
+  };
+
+  return [instrument, page];
 }
 
 /** schema.org Organization node for the publisher. Referenced by @id. */

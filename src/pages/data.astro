@@ -19,7 +19,7 @@ const fields = [
   ["tags", "Subject labels."],
   ["sourceUrl", "Link to the primary document."],
   ["frameworks", "Cross-framework mappings, e.g. to the NIST AI RMF."],
-  ["jsonLd", "schema.org node for the entry (Legislation or CreativeWork)."],
+  ["jsonLd", "Two schema.org nodes: the instrument (Legislation or CreativeWork, published by its issuing body) and AI Reg. Index's page about it (CreativeWork, published by AI Reg. Index)."],
 ];
 ---
 
@@ -78,9 +78,13 @@ const fields = [
     <h2 class="h2">Every page is parseable too</h2>
     <p class="body-text">
       Each register entry page carries the same data inline as schema.org
-      JSON-LD in the <code>&lt;head&gt;</code> — <code>Legislation</code> for
-      statutes, regulations, and executive orders, <code>CreativeWork</code>
-      for standards and advisories. The register itself carries a
+      JSON-LD in the <code>&lt;head&gt;</code>, as two nodes: the instrument
+      itself (<code>Legislation</code> for statutes, regulations, and
+      executive orders; <code>CreativeWork</code> for standards and
+      advisories), identified by its own primary-source URL, and AI Reg.
+      Index's page about it, a separate <code>CreativeWork</code> published
+      by AI Reg. Index. The two are kept distinct so nothing implies AI Reg.
+      Index published the underlying law. The register itself carries a
       <code>Dataset</code> and an <code>Organization</code> node; entry pages
       add a <code>BreadcrumbList</code>. An answer engine or a scraper can read
       the register without touching the JSON file.
