@@ -51,7 +51,8 @@ Bump `lastVerified` in `site.json` after a review pass — it shows in the
 masthead on every page.
 
 The register data can also be re-synced from the "AI Reg Index" Supabase
-project; see `scripts/supabase-export.sql`.
+project. The export queries live in the private `jbperrier/ai-reg-index-ops`
+repository.
 
 ## The `.astro` format
 
@@ -69,5 +70,5 @@ expressions or tag attributes unless you know what they do.
 
 - `src/layouts/`, `src/components/` — change every page at once
 - `astro.config.mjs`, `.github/workflows/`, `public/CNAME`, `public/.nojekyll` — build and deploy config
-- `supabase/functions/submit/` — the form handler; it is **not** auto-deployed,
-  it's redeployed separately against Supabase
+- the form handler lives in the private `jbperrier/ai-reg-index-ops`
+  repository; it is **not** auto-deployed, it's redeployed against Supabase
