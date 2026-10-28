@@ -32,9 +32,8 @@ npm run preview  # serve dist/
 To update an entry: edit `entries.json` (or `dossiers.json`), bump
 `site.json` `lastVerified` if needed, `npm run build`, commit, push.
 
-The source of record is the "AI Reg Index" Supabase project
-(`ypdgkpcorvvpgzofjtxh`). To re-sync from it, run the queries in
-`scripts/supabase-export.sql` and transform the rows back into the JSON files.
+The source of record is the "AI Reg Index" Supabase project. The export
+queries live in the private `jbperrier/ai-reg-index-ops` repository.
 
 ## Pages
 
